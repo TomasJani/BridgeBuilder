@@ -1,10 +1,17 @@
+:root {
+  --main-color: #111111;
+  --main-font-color: #ffffff;
+}
+
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
 
 html {
-    font-size: 16px;
-    color: var(--main-font-color);
+  font-size: 16px;
+  color: var(--main-font-color);
 } 
 
 body {
@@ -19,4 +26,12 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+footer {
+  color: var(--main-font-color);
+  background-color: var(--main-color);
+  line-height: 2rem;
+  display: flex;
+  justify-content: center;
 }

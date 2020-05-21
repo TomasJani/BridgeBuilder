@@ -1,0 +1,40 @@
+.menu {
+    font-size: 1.1rem;
+    background-color: var(--main-color);
+    padding-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0;
+    height: 5rem;
+    align-items: center;
+}
+.menu__items {
+    list-style-type: none;
+    display: flex;
+    margin-right: 2rem;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.menu__item {
+    text-decoration: none;
+    text-align: center;
+    margin: 1rem auto;
+}
+
+.menu__brand {
+    color: var(--main-font-color);
+    display: inline-block;
+    font-size: 1.6rem;
+    margin-top: 0.75rem;
+    margin-left: 1.2rem;
+}
+
+.menu_link {
+    color: var(--main-font-color);
+    margin-left: 4rem;
+}
+
+.menu__search {
+    margin: 0;
+    padding: 0;
+}
