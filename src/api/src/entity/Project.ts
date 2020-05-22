@@ -15,15 +15,15 @@ export class Project {
     @Column()
     created: string;
 
-    @ManyToOne(type => User, user => user.ownProjects)
+    @ManyToOne(()  => User, user => user.ownProjects)
     owner: User;
 
-    @ManyToMany(type => User, user => user.invitedToProjects)
+    @ManyToMany(()  => User, user => user.invitedToProjects)
     invitedUsers: User[];
 
-    @OneToMany(type => Work, work => work.project)
+    @OneToMany(()  => Work, work => work.project)
     works: Work[];
 
-    @OneToMany(type => Change, change => change.project)
+    @OneToMany(()  => Change, change => change.project)
     changes: Change[];
 }

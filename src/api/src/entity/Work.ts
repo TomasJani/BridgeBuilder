@@ -9,13 +9,13 @@ export class Work {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(type => User, user => user.works)
+    @ManyToOne(()  => User, user => user.works)
     author: User;
 
-    @ManyToOne(type => Project, project => project.works)
+    @ManyToOne(()  => Project, project => project.works)
     project: Project;
 
-    @OneToMany(type => Change, change => change.work)
+    @OneToMany(()  => Change, change => change.work)
     changes: Change[];
 
     @Column()

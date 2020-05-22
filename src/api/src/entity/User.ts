@@ -10,10 +10,10 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToMany(type => Work, work => work.author)
+    @OneToMany(() => Work, work => work.author)
     works: Work[];
 
-    @OneToMany(type => Change, change => change.author)
+    @OneToMany(() => Change, change => change.author)
     changes: Change[];
 
     @Column()
@@ -25,10 +25,10 @@ export class User {
     @Column()
     created: string;
 
-    @OneToMany(type => Project, project => project.owner)
+    @OneToMany(() => Project, project => project.owner)
     ownProjects: Project[];
 
-    @ManyToMany(type => Project, project => project.invitedUsers)
+    @ManyToMany(()  => Project, project => project.invitedUsers)
     @JoinTable()
     invitedToProjects: Project[];
 }
