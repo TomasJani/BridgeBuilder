@@ -1,4 +1,4 @@
-.file-menu {
+.work-menu {
     font-size: 1.1rem;
     background-color: var(--main-color);
     padding-bottom: 0.75rem;
@@ -8,20 +8,20 @@
     height: 3.5rem;
     align-items: center;
 }
-.file-menu__items {
+.work-menu__items {
     list-style-type: none;
     display: flex;
     margin-right: 2rem;
     flex-direction: row;
     justify-content: flex-start;
 }
-.file-menu__item {
+.work-menu__item {
     text-decoration: none;
     text-align: center;
     margin: 1rem auto;
 }
 
-.file-menu__settings {
+.work-menu__settings {
     color: var(--main-font-color);
     display: flex;
     font-size: 1.6rem;
@@ -29,7 +29,7 @@
     margin-right: 2rem;
 }
 
-.file-menu__link {
+.work-menu__link {
     color: var(--main-font-color);
     margin-left: 4rem;
 }
