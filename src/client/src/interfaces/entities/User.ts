@@ -4,11 +4,11 @@ import {IChange} from "./Change";
 
 export interface IUser {
     id: number;
+    works: IWork[];
+    changes: IChange[];
     username: string;
     image: string;
-    created: Date;
+    created: string;
     ownProjects: IProject[];
     invitedToProjects: IProject[];
-    works: IWork[]
-    changes: IChange[]
 }
