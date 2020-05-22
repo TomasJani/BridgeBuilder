@@ -1,0 +1,9 @@
+.bradcrumb {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    color: var(--secondary-font-color);
+}
+
+.breadcrumb__link {
+    color: var(--secondary-font-color);
+}
