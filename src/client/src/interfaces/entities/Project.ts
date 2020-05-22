@@ -6,6 +6,6 @@ export interface Project {
     name: string;
     created: Date;
     owner: User;
-    invited_users: User[];
+    invitedUsers: User[];
     works: Work[];
 }

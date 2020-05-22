@@ -7,8 +7,8 @@ export interface User {
     username: string;
     image: string;
     created: Date;
-    own_projects: Project[];
-    invited_to_projects: Project[];
+    ownProjects: Project[];
+    invitedToProjects: Project[];
     works: Work[]
     changes: Change[]
 }
