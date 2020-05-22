@@ -11,6 +11,9 @@ export class Work {
     @ManyToOne(type => User, user => user.works)
     author: User;
 
+    // @ManyToOne(type => Project, project => project.works)
+    // project: Project;
+
     @OneToMany(type => Change, change => change.work)
     changes: Change[];
 

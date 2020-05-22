@@ -14,6 +14,9 @@ export class Change {
     @ManyToOne(type => Work, work => work.changes)
     work: Work;
 
+    // @ManyToOne(type => Project, project => project.changes)
+    // project: Project;
+
     @Column()
     name: string;
 
