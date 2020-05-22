@@ -31,7 +31,7 @@ export class User {
     // @JoinTable()
     // works: Work[]
 
-    // TODO: Uncomment after Commit entity is implemented
-    // @OneToMany(type => Commit, commit => commit.user)
-    // commits: Commit[]
+    // TODO: Uncomment after Change entity is implemented
+    // @OneToMany(type => Change, change => change.user)
+    // changes: Change[]
 }
