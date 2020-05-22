@@ -16,6 +16,21 @@ export function changeRoutes(app: Application, connection: Connection) {
         return res.send(results);
     });
 
+    // app.get("/changes/:id/project", async function (req: Request, res: Response) {
+    //     const results = await changesReprository.findOne(req.params.id, { relations: ["project"] });
+    //     return res.send(results.project);
+    // });
+
+    app.get("/changes/:id/author", async function (req: Request, res: Response) {
+        const results = await changesReprository.findOne(req.params.id, { relations: ["author"] });
+        return res.send(results.author);
+    });
+
+    app.get("/changes/:id/work", async function (req: Request, res: Response) {
+        const results = await changesReprository.findOne(req.params.id, { relations: ["work"] });
+        return res.send(results.work);
+    });
+
     app.post("/changes", async function (req: Request, res: Response) {
         const Work = await changesReprository.create(req.body);
         const results = await changesReprository.save(Work);

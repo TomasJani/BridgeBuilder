@@ -16,6 +16,21 @@ export function workRoutes(app: Application, connection: Connection) {
         return res.send(results);
     });
 
+    app.get("/works/:id/changes", async function (req: Request, res: Response) {
+        const results = await worksReprository.findOne(req.params.id, { relations: ["changes"] });
+        return res.send(results.changes);
+    });
+
+    // app.get("/works/:id/project", async function (req: Request, res: Response) {
+    //     const results = await worksReprository.findOne(req.params.id, { relations: ["project"] });
+    //     return res.send(results.project);
+    // });
+
+    app.get("/works/:id/author", async function (req: Request, res: Response) {
+        const results = await worksReprository.findOne(req.params.id, { relations: ["author"] });
+        return res.send(results.author);
+    });
+
     app.post("/works", async function (req: Request, res: Response) {
         const Work = await worksReprository.create(req.body);
         const results = await worksReprository.save(Work);
