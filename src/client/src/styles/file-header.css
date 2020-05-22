@@ -1,0 +1,39 @@
+.file-header {
+    font-size: 1.1rem;
+    background-color: var(--secondary-color);
+    padding-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0;
+    height: 3.5rem;
+    align-items: center;
+}
+.file-header__items {
+    list-style-type: none;
+    display: flex;
+    margin-right: 2rem;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.file-header__item {
+    text-decoration: none;
+    text-align: center;
+    margin: 1rem auto;
+}
+
+.file-header__settings {
+    color: var(--secondary-font-color);
+    display: flex;
+    font-size: 1.6rem;
+    justify-content: end;
+    margin-right: 2rem;
+}
+
+.file-header__link {
+    color: var(--secondary-font-color);
+    margin-left: 4rem;
+}
+
+.file-header__date {
+    margin-right: 1rem;
+}

@@ -1,6 +1,8 @@
 :root {
   --main-color: #111111;
   --main-font-color: #ffffff;
+  --secondary-color: #C4C4C4;
+  --secondary-font-color: #111111;
 }
 
 * {
@@ -34,4 +36,10 @@ footer {
   line-height: 2rem;
   display: flex;
   justify-content: center;
+}
+
+.container {
+  max-width: 80%;
+  padding: 0 1rem;
+  margin: 3rem auto 6rem;
 }

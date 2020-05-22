@@ -1,5 +1,5 @@
 import React from 'react';
-import "../css/main-menu.css"
+import "../styles/main-menu.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
@@ -13,10 +13,10 @@ export function MainMenu() {
             </form>
             <ul className="menu__items">
                 <li className="menu__item">
-                    <a className="menu_link" href="#">Projects</a>
+                    <a className="menu__link" href="#">Projects</a>
                 </li>
                 <li className="menu__item">
-                    <a className="menu_link" href="#">Logout</a>
+                    <a className="menu__link" href="#">Logout</a>
                 </li>
             </ul>
         </nav>
