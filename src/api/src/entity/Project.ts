@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, ManyToOne} from "typeorm";
 import {User} from "./User";
 
 @Entity()
@@ -13,8 +13,11 @@ export class Project {
     @Column()
     created: Date;
 
-    @ManyToMany(type => User, user => user.projects)
-    users: User[];
+    @ManyToOne(type => User, work => work.own_projects)
+    owner: User;
+
+    @ManyToMany(type => User, user => user.invited_to_projects)
+    invited_users: User[];
 
     // TODO: Uncomment after Work entity is implemented
     // @OneToMany(type => Work, work => work.project)

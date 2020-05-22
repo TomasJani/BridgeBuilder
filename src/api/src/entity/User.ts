@@ -22,9 +22,15 @@ export class User {
     @Column()
     image: string;
 
-    @ManyToMany(type => Project, project => project.users)
+    @Column()
+    created: Date;
+
+    @OneToMany(type => Project, project => project.owner)
+    own_projects: Project[];
+
+    @ManyToMany(type => Project, project => project.invited_users)
     @JoinTable()
-    projects: Project[];
+    invited_to_projects: Project[];
 
     // TODO: Uncomment after Work entity is implemented
     // @ManyToMany(type => Work, work => work.users)
