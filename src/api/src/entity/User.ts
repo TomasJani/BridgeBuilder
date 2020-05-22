@@ -1,6 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany} from "typeorm";
 import { Change } from "./Change";
 import { Work } from "./Work";
+import {Project} from "./Project";
+
 
 @Entity()
 export class User {
@@ -15,12 +17,21 @@ export class User {
     changes: Change[];
 
     @Column()
-    firstName: string;
+    username: string;
 
     @Column()
-    lastName: string;
+    image: string;
 
-    @Column()
-    age: number;
+    @ManyToMany(type => Project, project => project.users)
+    @JoinTable()
+    projects: Project[];
 
+    // TODO: Uncomment after Work entity is implemented
+    // @ManyToMany(type => Work, work => work.users)
+    // @JoinTable()
+    // works: Work[]
+
+    // TODO: Uncomment after Commit entity is implemented
+    // @OneToMany(type => Commit, commit => commit.user)
+    // commits: Commit[]
 }
