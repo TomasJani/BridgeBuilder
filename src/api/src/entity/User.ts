@@ -23,21 +23,12 @@ export class User {
     image: string;
 
     @Column()
-    created: Date;
+    created: string;
 
     @OneToMany(type => Project, project => project.owner)
-    own_projects: Project[];
+    ownProjects: Project[];
 
-    @ManyToMany(type => Project, project => project.invited_users)
+    @ManyToMany(type => Project, project => project.invitedUsers)
     @JoinTable()
-    invited_to_projects: Project[];
-
-    // TODO: Uncomment after Work entity is implemented
-    // @ManyToMany(type => Work, work => work.users)
-    // @JoinTable()
-    // works: Work[]
-
-    // TODO: Uncomment after Change entity is implemented
-    // @OneToMany(type => Change, change => change.user)
-    // changes: Change[]
+    invitedToProjects: Project[];
 }

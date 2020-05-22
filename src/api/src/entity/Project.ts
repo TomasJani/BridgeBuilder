@@ -1,5 +1,7 @@
 import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, ManyToOne} from "typeorm";
 import {User} from "./User";
+import {Work} from "./Work";
+import {Change} from "./Change";
 
 @Entity()
 export class Project {
@@ -11,15 +13,17 @@ export class Project {
     name: string;
 
     @Column()
-    created: Date;
+    created: string;
 
-    @ManyToOne(type => User, work => work.own_projects)
+    @ManyToOne(type => User, user => user.ownProjects)
     owner: User;
 
-    @ManyToMany(type => User, user => user.invited_to_projects)
-    invited_users: User[];
+    @ManyToMany(type => User, user => user.invitedToProjects)
+    invitedUsers: User[];
 
-    // TODO: Uncomment after Work entity is implemented
-    // @OneToMany(type => Work, work => work.project)
-    // works: Work[];
+    @OneToMany(type => Work, work => work.project)
+    works: Work[];
+
+    @OneToMany(type => Change, change => change.project)
+    changes: Change[];
 }
