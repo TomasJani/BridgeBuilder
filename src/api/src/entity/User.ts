@@ -6,9 +6,11 @@ import {Project} from "./Project";
 
 @Entity()
 export class User {
-
     @PrimaryGeneratedColumn()
     id: number;
+
+    @Column()
+    googleId: number;
 
     @OneToMany(() => Work, work => work.author)
     works: Work[];

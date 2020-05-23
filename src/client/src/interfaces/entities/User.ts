@@ -4,6 +4,7 @@ import {IChange} from "./Change";
 
 export interface IUser {
     id: number;
+    googleId: number;
     works: IWork[];
     changes: IChange[];
     username: string;
