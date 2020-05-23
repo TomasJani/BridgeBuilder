@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { Work } from "./Work";
 import { User } from "./User";
+import {Project} from "./Project";
 
 @Entity()
 export class Change {
@@ -8,14 +9,14 @@ export class Change {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(type => User, user => user.changes)
+    @ManyToOne(() => User, user => user.changes)
     author: User;
 
-    @ManyToOne(type => Work, work => work.changes)
+    @ManyToOne(() => Work, work => work.changes)
     work: Work;
 
-    // @ManyToOne(type => Project, project => project.changes)
-    // project: Project;
+    @ManyToOne(() => Project, project => project.changes)
+    project: Project;
 
     @Column()
     name: string;

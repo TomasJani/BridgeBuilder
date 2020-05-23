@@ -1,6 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany} from "typeorm";
 import { Change } from "./Change";
 import { Work } from "./Work";
+import {Project} from "./Project";
+
 
 @Entity()
 export class User {
@@ -8,19 +10,25 @@ export class User {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @OneToMany(type => Work, work => work.author)
+    @OneToMany(() => Work, work => work.author)
     works: Work[];
 
-    @OneToMany(type => Change, change => change.author)
+    @OneToMany(() => Change, change => change.author)
     changes: Change[];
 
     @Column()
-    firstName: string;
+    username: string;
 
     @Column()
-    lastName: string;
+    image: string;
 
     @Column()
-    age: number;
+    created: string;
 
+    @OneToMany(() => Project, project => project.owner)
+    ownProjects: Project[];
+
+    @ManyToMany(()  => Project, project => project.invitedUsers)
+    @JoinTable()
+    invitedToProjects: Project[];
 }
