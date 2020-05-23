@@ -1,13 +1,14 @@
 import React from 'react';
 import { MainMenu } from './MainMenu';
 import { Footer } from './Footer';
-import { WorkEdit } from './WorkEdit/WorkEdit';
+import { Work } from './Work/Work';
+import { Project } from './Project/Project';
 
 function App() {
 	return (
 		<div>
 			<MainMenu />
-			<WorkEdit />
+			<Project />
 			<Footer />
 		</div>
 	);

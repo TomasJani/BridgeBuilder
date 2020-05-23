@@ -1,8 +1,8 @@
-import {Connection} from "typeorm";
-import {User} from "./entity/User";
-import {Work} from "./entity/Work";
-import {Change} from "./entity/Change";
-import {Project} from "./entity/Project";
+import { Connection } from "typeorm";
+import { User } from "./entity/User";
+import { Work } from "./entity/Work";
+import { Change } from "./entity/Change";
+import { Project } from "./entity/Project";
 
 const createUser = async (connection: Connection, googleId: number, username: string): Promise<User> => {
     console.log("Inserting a new user into the database...");
@@ -54,19 +54,19 @@ const createProject = async (connection: Connection, name: string, user: User): 
 
 const printAllData = async (connection: Connection): Promise<void> => {
     const usersRepository = await connection.getRepository(User);
-    const users = await usersRepository.find({relations: ["works", "changes", "ownProjects", "invitedToProjects"]});
+    const users = await usersRepository.find({ relations: ["works", "changes", "ownProjects", "invitedToProjects"] });
     users.forEach(user => console.log(user));
 
     const projectsRepository = await connection.getRepository(Project);
-    const projects = await projectsRepository.find({relations: ["owner", "invitedUsers", "works", "changes"]});
+    const projects = await projectsRepository.find({ relations: ["owner", "invitedUsers", "works"] });
     projects.forEach(project => console.log(project));
 
     const worksRepository = await connection.getRepository(Work);
-    const works = await worksRepository.find({relations: ["author", "project", "changes"]});
+    const works = await worksRepository.find({ relations: ["author", "project", "changes"] });
     works.forEach(work => console.log(work));
 
     const changesRepository = await connection.getRepository(Change);
-    const changes = await changesRepository.find({relations: ["author", "work", "project"]});
+    const changes = await changesRepository.find({ relations: ["author", "work"] });
     changes.forEach(change => console.log(change));
 }
 

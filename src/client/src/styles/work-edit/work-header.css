@@ -21,14 +21,6 @@
     margin: 1rem auto;
 }
 
-.work-header__settings {
-    color: var(--secondary-font-color);
-    display: flex;
-    font-size: 1.6rem;
-    justify-content: end;
-    margin-right: 2rem;
-}
-
 .work-header__link {
     color: var(--secondary-font-color);
     margin-left: 4rem;

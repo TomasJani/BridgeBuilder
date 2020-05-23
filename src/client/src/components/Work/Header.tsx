@@ -1,12 +1,14 @@
 import React from 'react';
 import '../../styles/work-edit/work-header.css'
+import { IChange } from '../../interfaces/entities/Change';
 
-interface IWorkHeaderProps {
+interface IHeaderProps {
+    // workId: number,
     name: string,
-    change: any
+    // change: IChange
 }
 
-export function WorkHeader(props: IWorkHeaderProps) {
+export function Header(props: IHeaderProps) {
     return (
         <div className="work-header">
             <ul className="work-header__items">

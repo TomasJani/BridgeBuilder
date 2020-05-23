@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { Breadcrumb } from '../Breadcrumb';
-import { WorkMainMenu } from './WorkMainMenu';
-import { WorkHeader } from './WorkHeader';
-import { WorkEditor } from './WorkEditor';
-import { WorkSubmit } from './WorkSubmit';
+import { Menu } from './Menu';
+import { Header } from './Header';
+import { Editor } from './Editor';
+import { Form } from './Form';
 
 const breadcrumbItems = [
     {
@@ -16,15 +16,15 @@ const breadcrumbItems = [
     }
 ]
 
-export class WorkEdit extends Component {
+export class Work extends Component {
     render() {
         return (
             <div className="container">
                 <Breadcrumb items={breadcrumbItems} />
-                <WorkMainMenu />
-                <WorkHeader name="Work name" change="commit" />
-                <WorkEditor />
-                <WorkSubmit />
+                <Menu />
+                <Header name="Work name" />
+                <Editor />
+                <Form />
             </div>
         )
     }

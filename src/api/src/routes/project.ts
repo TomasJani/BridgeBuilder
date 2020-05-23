@@ -1,6 +1,6 @@
-import {Application, Request, Response} from "express";
-import {Connection} from "typeorm";
-import {Project} from "../entity/Project";
+import { Application, Request, Response } from "express";
+import { Connection } from "typeorm";
+import { Project } from "../entity/Project";
 
 
 export function projectRoutes(app: Application, connection: Connection): void {
@@ -17,22 +17,21 @@ export function projectRoutes(app: Application, connection: Connection): void {
     });
 
     app.get("/projects/:id/works", async function (req: Request, res: Response) {
-        const results = await projectRepository.findOne(req.params.id, {relations: ["works"]});
+        const results = await projectRepository.findOne(req.params.id, { relations: ["works"] });
         return res.send(results.works);
     });
 
-
     app.get("/projects/:id/owner", async function (req: Request, res: Response) {
-        const results = await projectRepository.findOne(req.params.id, {relations: ["owner"]});
+        const results = await projectRepository.findOne(req.params.id, { relations: ["owner"] });
         return res.send(results.owner);
     });
 
     app.get("/projects/:id/invitedUsers", async function (req: Request, res: Response) {
-        const results = await projectRepository.findOne(req.params.id, {relations: ["invitedUsers"]});
+        const results = await projectRepository.findOne(req.params.id, { relations: ["invitedUsers"] });
         return res.send(results.invitedUsers);
     });
 
-    app.post("/projects/:id/:userId", async function (req: Request, res: Response) {
+    app.post("/projects/:id/invitedUsers/:userId", async function (req: Request, res: Response) {
         const results = await projectRepository
             .createQueryBuilder()
             .relation(Project, "invitedUsers")

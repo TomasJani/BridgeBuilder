@@ -1,4 +1,4 @@
-.work-submit {
+.work-form {
     font-size: 1.1rem;
     background-color: var(--main-color);
     padding-bottom: 0.75rem;
@@ -9,7 +9,7 @@
     align-items: center;
 }
 
-.work-submit__input {
+.work-form__input {
     color: var(--secondary-font-color);
     width: 100%;
     height: 60%;
@@ -18,7 +18,7 @@
     margin-right: 2rem;
 }
 
-.work-submit__link {
+.work-form__link {
     color: var(--main-font-color);
     margin-right: 2rem;
 }
