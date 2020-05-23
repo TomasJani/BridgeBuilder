@@ -6,7 +6,7 @@ import 'froala-editor/css/froala_editor.pkgd.min.css';
 import FroalaEditorComponent from 'react-froala-wysiwyg';
 import '../../styles/work-edit/work-editor.css';
 
-export function WorkEditor() {
+export function Editor() {
     return (
         <div className="work-editor">
             <FroalaEditorComponent tag='textarea' />
