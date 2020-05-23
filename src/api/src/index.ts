@@ -12,5 +12,5 @@ createConnection().then(async connection => {
 
     routes(app, connection, port);
 
-    loadData(connection);
+    await loadData(connection);
 }).catch(error => console.log(error));
