@@ -1,0 +1,30 @@
+.project-header {
+    font-size: 1.1rem;
+    background-color: var(--secondary-color);
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0;
+    height: 3.5rem;
+    align-items: center;
+}
+.project-header__items {
+    list-style-type: none;
+    display: flex;
+    margin-right: 2rem;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.project-header__item {
+    text-decoration: none;
+    text-align: center;
+    margin: 1rem auto;
+}
+
+.project-header__link {
+    color: var(--secondary-font-color);
+    margin-left: 4rem;
+}
+
+.project-header__date {
+    margin-right: 1rem;
+}
