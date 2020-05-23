@@ -26,6 +26,13 @@ export function userRoutes(app: Application, connection: Connection): void {
         return res.send(results.invitedToProjects);
     });
 
+    app.get("/users/:id/relatedProjects", async function (req: Request, res: Response) {
+        const resultsOwn = await usersRepository.findOne(req.params.id, {relations: ["ownProjects"]});
+        const resultsInvited = await usersRepository.findOne(req.params.id, {relations: ["invitedToProjects"]});
+        return res.send(resultsOwn.ownProjects.concat(resultsInvited.invitedToProjects));
+    });
+
+
     app.post("/users", async function (req: Request, res: Response) {
         const User = await usersRepository.create(req.body);
         const results = await usersRepository.save(User);
