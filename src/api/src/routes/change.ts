@@ -16,11 +16,6 @@ export function changeRoutes(app: Application, connection: Connection) {
         return res.send(results);
     });
 
-    app.get("/changes/:id/project", async function (req: Request, res: Response) {
-        const results = await changesReprository.findOne(req.params.id, { relations: ["project"] });
-        return res.send(results.project);
-    });
-
     app.get("/changes/:id/author", async function (req: Request, res: Response) {
         const results = await changesReprository.findOne(req.params.id, { relations: ["author"] });
         return res.send(results.author);
