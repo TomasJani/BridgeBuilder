@@ -58,7 +58,7 @@ export class ChangeStore {
 
     @action
     loadProjectChanges = async (changeId: number) => {
-        const changesResponse = await fetch(`http://localhost:5000/changes/${changeId}/changes`);
+        const changesResponse = await fetch(`http://localhost:5000/projects/${changeId}/changes`);
         const changes = await changesResponse.json();
         this.changes = changes;
         this.isLoading = false;

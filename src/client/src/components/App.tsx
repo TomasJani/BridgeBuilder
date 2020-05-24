@@ -6,6 +6,7 @@ import { Projects } from "./Projects/Projects";
 import { createStores } from '../stores/createStore';
 import { Project } from './Project/Project';
 import { Work } from './Work/Work';
+import { Changes } from './Changes/Changes';
 
 const stores = createStores()
 
@@ -13,7 +14,7 @@ function App() {
 	return (
 		<Provider {...stores}>
 			<MainMenu />
-			<Work />
+			<Changes workId={1} />
 			<Footer />
 		</Provider>
 	);
