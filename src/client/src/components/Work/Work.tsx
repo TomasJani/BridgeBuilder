@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Breadcrumb } from '../Breadcrumb';
 import { Menu } from './Menu';
 import { Header } from './Header';
-import { Editor } from './Editor';
 import { Form } from './Form';
 
 const breadcrumbItems = [
@@ -23,8 +22,7 @@ export class Work extends Component {
                 <Breadcrumb items={breadcrumbItems} />
                 <Menu />
                 <Header name="Work name" />
-                <Editor />
-                <Form />
+                <Form workId={1} />
             </div>
         )
     }
