@@ -14,7 +14,9 @@ function App() {
 	return (
 		<Provider {...stores}>
 			<MainMenu />
-			<Changes workId={1} />
+			{/* <Changes projectId={1} /> */}
+			{/* <Work /> */}
+			<Project />
 			<Footer />
 		</Provider>
 	);

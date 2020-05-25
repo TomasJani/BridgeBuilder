@@ -5,9 +5,8 @@ import { User } from "../entity/User";
 import { Change } from "../entity/Change";
 
 
-export function workRoutes(app: Application, connection: Connection) {
-    const worksReprository = connection.getRepository(Work);
-    const userReprository = connection.getRepository(User);
+export function workRoutes(app: Application) {
+    const worksReprository = getConnection().getRepository(Work);
 
     app.get("/works", async function (req: Request, res: Response) {
         const works = await worksReprository.find();
@@ -60,7 +59,6 @@ export function workRoutes(app: Application, connection: Connection) {
             .relation(Change, "author")
             .of(change)
             .loadOne();
-        console.log(change)
         return change;
     }
 }

@@ -1,10 +1,10 @@
-import {Application, Request, Response} from "express";
-import {Connection} from "typeorm";
-import {User} from "../entity/User";
+import { Application, Request, Response } from "express";
+import { Connection, getConnection } from "typeorm";
+import { User } from "../entity/User";
 
 
-export function userRoutes(app: Application, connection: Connection): void {
-    const usersRepository = connection.getRepository(User);
+export function userRoutes(app: Application): void {
+    const usersRepository = getConnection().getRepository(User);
 
     app.get("/users", async function (req: Request, res: Response) {
         const users = await usersRepository.find();
@@ -17,18 +17,18 @@ export function userRoutes(app: Application, connection: Connection): void {
     });
 
     app.get("/users/:id/ownProjects", async function (req: Request, res: Response) {
-        const results = await usersRepository.findOne(req.params.id, {relations: ["ownProjects"]});
+        const results = await usersRepository.findOne(req.params.id, { relations: ["ownProjects"] });
         return res.send(results.ownProjects);
     });
 
     app.get("/users/:id/invitedToProjects", async function (req: Request, res: Response) {
-        const results = await usersRepository.findOne(req.params.id, {relations: ["invitedToProjects"]});
+        const results = await usersRepository.findOne(req.params.id, { relations: ["invitedToProjects"] });
         return res.send(results.invitedToProjects);
     });
 
     app.get("/users/:id/relatedProjects", async function (req: Request, res: Response) {
-        const resultsOwn = await usersRepository.findOne(req.params.id, {relations: ["ownProjects"]});
-        const resultsInvited = await usersRepository.findOne(req.params.id, {relations: ["invitedToProjects"]});
+        const resultsOwn = await usersRepository.findOne(req.params.id, { relations: ["ownProjects"] });
+        const resultsInvited = await usersRepository.findOne(req.params.id, { relations: ["invitedToProjects"] });
         return res.send(resultsOwn.ownProjects.concat(resultsInvited.invitedToProjects));
     });
 

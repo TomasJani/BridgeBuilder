@@ -1,10 +1,10 @@
 import { Application, Request, Response } from "express";
-import { Connection } from "typeorm";
+import { Connection, getConnection } from "typeorm";
 import { Change } from "../entity/Change";
 
 
-export function changeRoutes(app: Application, connection: Connection) {
-    const changesReprository = connection.getRepository(Change);
+export function changeRoutes(app: Application) {
+    const changesReprository = getConnection().getRepository(Change);
 
     app.get("/changes", async function (req: Request, res: Response) {
         const changes = await changesReprository.find();

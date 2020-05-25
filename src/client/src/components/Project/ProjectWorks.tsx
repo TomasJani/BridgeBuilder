@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { ProjectMenu } from './Menu';
 import WorkItem from './WorkItem';
 import { inject, observer } from 'mobx-react';
 import { Stores } from '../../stores/Stores';
@@ -26,7 +25,7 @@ export class ProjectWorks extends Component<IProjectWorksProps> {
 
     processWorks() {
         return this.props.WorkStore?.works.map(work => {
-            return <WorkItem id={work.id} name={work.name} created={work.created} />
+            return <WorkItem id={work.id} name={work.name} author={work.author} created={work.created} />
         })
     }
 }
