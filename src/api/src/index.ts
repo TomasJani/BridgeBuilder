@@ -10,7 +10,7 @@ createConnection().then(async connection => {
     const app: Application = express();
     const port: string = process.env.PORT || "5000";
 
-    routes(app, connection, port);
+    routes(app, port);
 
     await loadData(connection);
 }).catch(error => console.log(error));

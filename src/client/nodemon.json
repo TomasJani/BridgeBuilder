@@ -3,5 +3,5 @@
         "src"
     ],
     "ext": "tsx,ts,css",
-    "exec": "react-scripts start"
+    "exec": "npm run start"
 }

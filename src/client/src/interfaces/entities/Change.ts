@@ -1,13 +1,24 @@
-import {IUser} from "./User";
-import {IWork} from "./Work";
-import {IProject} from "./Project";
+import { IUser } from "./User";
+import { IWork } from "./Work";
 
 export interface IChange {
     id: number;
     author: IUser;
     work: IWork;
-    project: IProject;
     name: string;
     content: string;
     created: string;
+}
+
+export interface IChangeCreate {
+    author: number;
+    work: number;
+    name: string;
+    content: string;
+    created: string;
+}
+
+export interface IChangeEdit {
+    id: number;
+    name: string;
 }

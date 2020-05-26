@@ -1,10 +1,12 @@
 import { Application, Request, Response } from "express";
-import { Connection } from "typeorm";
+import { Connection, getConnection } from "typeorm";
 import { Work } from "../entity/Work";
+import { User } from "../entity/User";
+import { Change } from "../entity/Change";
 
 
-export function workRoutes(app: Application, connection: Connection) {
-    const worksReprository = connection.getRepository(Work);
+export function workRoutes(app: Application) {
+    const worksReprository = getConnection().getRepository(Work);
 
     app.get("/works", async function (req: Request, res: Response) {
         const works = await worksReprository.find();
@@ -18,6 +20,8 @@ export function workRoutes(app: Application, connection: Connection) {
 
     app.get("/works/:id/changes", async function (req: Request, res: Response) {
         const results = await worksReprository.findOne(req.params.id, { relations: ["changes"] });
+
+        results.changes = await Promise.all(results.changes.map(async (change) => addAuthor(change)))
         return res.send(results.changes);
     });
 
@@ -48,4 +52,13 @@ export function workRoutes(app: Application, connection: Connection) {
         await worksReprository.delete(req.params.id);
         return res.status(204).send();
     });
+
+    async function addAuthor(change: Change): Promise<Change> {
+        change.author = await getConnection()
+            .createQueryBuilder()
+            .relation(Change, "author")
+            .of(change)
+            .loadOne();
+        return change;
+    }
 }

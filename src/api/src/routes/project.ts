@@ -1,10 +1,12 @@
 import { Application, Request, Response } from "express";
-import { Connection } from "typeorm";
+import { getConnection } from "typeorm";
 import { Project } from "../entity/Project";
+import { Work } from "../entity/Work";
+import { Change } from "../entity/Change";
 
 
-export function projectRoutes(app: Application, connection: Connection): void {
-    const projectRepository = connection.getRepository(Project);
+export function projectRoutes(app: Application): void {
+    const projectRepository = getConnection().getRepository(Project);
 
     app.get("/projects", async function (req: Request, res: Response) {
         const projects = await projectRepository.find();
@@ -18,7 +20,23 @@ export function projectRoutes(app: Application, connection: Connection): void {
 
     app.get("/projects/:id/works", async function (req: Request, res: Response) {
         const results = await projectRepository.findOne(req.params.id, { relations: ["works"] });
+
+        results.works = await Promise.all(results.works.map(async (work) => addAuthorToWork(work)))
+        results.works = await Promise.all(results.works.map(async (work) => addLatestChange(work)))
+
         return res.send(results.works);
+    });
+
+    app.get("/projects/:id/changes", async function (req: Request, res: Response) {
+        const results = await projectRepository.findOne(req.params.id, { relations: ["works"] });
+
+        results.works = await Promise.all(results.works.map(async (work) => addChanges(work)))
+        let changes = [];
+        results.works.forEach(work => {
+            work.changes.forEach(change => { changes.push(change) })
+        })
+        changes = await Promise.all(changes.map(async (change) => addAuthorToChange(change)))
+        return res.send(changes);
     });
 
     app.get("/projects/:id/owner", async function (req: Request, res: Response) {
@@ -58,4 +76,50 @@ export function projectRoutes(app: Application, connection: Connection): void {
         await projectRepository.delete(req.params.id);
         return res.status(204).send();
     });
+
+    async function addAuthorToWork(work: Work) {
+        work.author = await getConnection()
+            .createQueryBuilder()
+            .relation(Work, "author")
+            .of(work)
+            .loadOne();
+        return work;
+    }
+
+    async function addAuthorToChange(change: Change): Promise<Change> {
+        change.author = await getConnection()
+            .createQueryBuilder()
+            .relation(Change, "author")
+            .of(change)
+            .loadOne();
+        return change;
+    }
+
+    async function addChanges(work: Work): Promise<Work> {
+        work.changes = await getConnection()
+            .createQueryBuilder()
+            .relation(Work, "changes")
+            .of(work)
+            .loadMany();
+        return work;
+    }
+
+    async function addLatestChange(work: Work): Promise<Work> {
+        work.changes = await getConnection()
+            .createQueryBuilder()
+            .relation(Work, "changes")
+            .of(work)
+            .loadMany();
+        work.changes.sort(function (a, b) {
+            if (Date.parse(a.created) > Date.parse(b.created)) {
+                return -1;
+            }
+            if (Date.parse(a.created) < Date.parse(b.created)) {
+                return 1;
+            }
+            return 0;
+        });
+        work.changes = [work.changes[0]];
+        return work;
+    }
 }

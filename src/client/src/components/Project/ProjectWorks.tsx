@@ -1,13 +1,31 @@
 import React, { Component } from 'react';
-import { ProjectMenu } from './Menu';
 import WorkItem from './WorkItem';
+import { inject, observer } from 'mobx-react';
+import { Stores } from '../../stores/Stores';
+import { WorkStore } from '../../stores/WorkStore';
 
-export class ProjectWorks extends Component {
+interface IProjectWorksProps {
+    WorkStore?: WorkStore
+}
+
+@inject(Stores.WORK_STORE)
+@observer
+export class ProjectWorks extends Component<IProjectWorksProps> {
     render() {
         return (
             <div>
-                <WorkItem id={1} name="work" created="25.2.2420" />
+                {this.processWorks()}
             </div>
         )
+    }
+
+    async componentDidMount() {
+        await this.props.WorkStore!.loadWorks(1);
+    }
+
+    processWorks() {
+        return this.props.WorkStore?.works.map(work => {
+            return <WorkItem id={work.id} name={work.name} author={work.author} created={work.created} />
+        })
     }
 }

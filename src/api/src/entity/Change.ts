@@ -1,7 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { Work } from "./Work";
 import { User } from "./User";
-import { Project } from "./Project";
 
 @Entity()
 export class Change {

@@ -1,11 +1,20 @@
 import { ProjectStore } from "./ProjectStore";
 import { IProject } from "../interfaces/entities/Project";
+import { ChangeStore } from "./ChangeStore";
+import { IChange } from "../interfaces/entities/Change";
+import { WorkStore } from "./WorkStore";
+import { IWork } from "../interfaces/entities/Work";
+import { Stores } from "./Stores";
 
-export function createStore(initialProjects: IProject[] = []) {
+export function createStores(initialProjects: IProject[] = [], initlChanges: IChange[] = [], initlWork: IWork[] = []) {
     const projectStore = new ProjectStore(initialProjects);
+    const changeStore = new ChangeStore(initlChanges);
+    const workStore = new WorkStore(initlWork);
 
     return {
-        "ProjectStore": projectStore
+        [Stores.PROJECT_STORE]: projectStore,
+        [Stores.CHANGE_STORE]: changeStore,
+        [Stores.WORK_STORE]: workStore
     }
 
 }
