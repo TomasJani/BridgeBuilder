@@ -92,8 +92,8 @@ export class Form extends Component<IFormProps, IFormState> {
             name: ''
         })
 
-        this.props.WorkStore!.editWork(editWork);
-        this.props.ChangeStore!.addChange(createChange);
+        await this.props.WorkStore!.editWork(editWork);
+        await this.props.ChangeStore!.addChange(createChange);
         e.preventDefault();
     }
 }

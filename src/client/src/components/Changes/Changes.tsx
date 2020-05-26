@@ -36,10 +36,10 @@ export class Changes extends Component<IChangesProps> {
 
     async componentDidMount() {
         if (this.props.projectId !== undefined) {
-            this.props.ChangeStore!.loadProjectChanges(this.props.projectId);
+            await this.props.ChangeStore!.loadProjectChanges(this.props.projectId);
         }
         if (this.props.workId !== undefined) {
-            this.props.ChangeStore!.loadWorkChanges(this.props.workId);
+            await this.props.ChangeStore!.loadWorkChanges(this.props.workId);
         }
     }
 

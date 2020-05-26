@@ -56,7 +56,7 @@ export class AddWorkForm extends Component<IAddWorkFormProps, IAddWorkFormState>
             ...this.state,
             name: ''
         })
-        this.props.WorkStore!.addWork(newWork);
+        await this.props.WorkStore!.addWork(newWork);
         e.preventDefault();
     }
 }

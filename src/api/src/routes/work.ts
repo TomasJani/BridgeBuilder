@@ -53,7 +53,7 @@ export function workRoutes(app: Application) {
         return res.status(204).send();
     });
 
-    async function addAuthor(change: Change) {
+    async function addAuthor(change: Change): Promise<Change> {
         change.author = await getConnection()
             .createQueryBuilder()
             .relation(Change, "author")

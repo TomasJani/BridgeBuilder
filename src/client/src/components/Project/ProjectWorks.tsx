@@ -20,7 +20,7 @@ export class ProjectWorks extends Component<IProjectWorksProps> {
     }
 
     async componentDidMount() {
-        this.props.WorkStore!.loadWorks(1);
+        await this.props.WorkStore!.loadWorks(1);
     }
 
     processWorks() {

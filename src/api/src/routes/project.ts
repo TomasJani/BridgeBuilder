@@ -86,7 +86,7 @@ export function projectRoutes(app: Application): void {
         return work;
     }
 
-    async function addAuthorToChange(change: Change) {
+    async function addAuthorToChange(change: Change): Promise<Change> {
         change.author = await getConnection()
             .createQueryBuilder()
             .relation(Change, "author")
@@ -95,7 +95,7 @@ export function projectRoutes(app: Application): void {
         return change;
     }
 
-    async function addChanges(work: Work) {
+    async function addChanges(work: Work): Promise<Work> {
         work.changes = await getConnection()
             .createQueryBuilder()
             .relation(Work, "changes")
@@ -104,7 +104,7 @@ export function projectRoutes(app: Application): void {
         return work;
     }
 
-    async function addLatestChange(work: Work) {
+    async function addLatestChange(work: Work): Promise<Work> {
         work.changes = await getConnection()
             .createQueryBuilder()
             .relation(Work, "changes")
