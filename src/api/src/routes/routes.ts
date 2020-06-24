@@ -1,15 +1,13 @@
-import { Application } from "express"
-import * as bodyParser from "body-parser";
-import * as cors from "cors"
-import { workRoutes } from "./work";
-import { changeRoutes } from "./change";
-import { userRoutes } from "./user";
-import { projectRoutes } from "./project";
+import {Application} from "express"
+import cors from "cors"
+import {workRoutes} from "./work";
+import {changeRoutes} from "./change";
+import {userRoutes} from "./user";
+import {projectRoutes} from "./project";
+import {authRoutes} from "./auth";
 
 export function routes(app: Application, port: string): void {
-    app.use(bodyParser.json());
-    app.use(cors());
-
+    authRoutes(app);
     workRoutes(app);
     changeRoutes(app);
     userRoutes(app);
