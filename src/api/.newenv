@@ -1,0 +1,10 @@
+# Cookie key - put someting random here
+COOKIE_KEY="adjaskodjaklcnsklfnskvnsdckndcksndfkjsdhf"
+
+# Google keys - get yours from https://console.developers.google.com/
+GOOGLE_CLIENT_ID=XXX
+GOOGLE_CLIENT_SECRET=XXX
+GOOGLE_CALLBACK_URL=/auth/google/callback
+
+# Client URL
+CLIENT_BASE_URL="http://localhost:3000"

@@ -1,5 +1,5 @@
-import { observable, action } from "mobx";
-import { IChange, IChangeEdit, IChangeCreate } from "../interfaces/entities/Change";
+import {observable, action} from "mobx";
+import {IChange, IChangeEdit, IChangeCreate} from "../interfaces/entities/Change";
 
 export class ChangeStore {
     @observable
@@ -20,7 +20,8 @@ export class ChangeStore {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(change)
+            body: JSON.stringify(change),
+            credentials: "include"
         });
         const newWork: IChange = await response.json();
         this.changes.push(newWork);
@@ -33,7 +34,8 @@ export class ChangeStore {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(change)
+            body: JSON.stringify(change),
+            credentials: "include"
         });
         const editChangeIndex = this.changes.findIndex(storeWork => storeWork.id === change.id);
         this.changes[editChangeIndex].name = change.name;
@@ -44,13 +46,16 @@ export class ChangeStore {
         const removeIndex = this.changes.findIndex(storeChange => storeChange.id === change.id);
         this.changes.splice(removeIndex, 1);
         const response = await fetch(`http://localhost:5000/changes/${change.id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            credentials: "include"
         });
     }
 
     @action
     loadWorkChanges = async (workId: number) => {
-        const changesResponse = await fetch(`http://localhost:5000/works/${workId}/changes`);
+        const changesResponse = await fetch(`http://localhost:5000/works/${workId}/changes`,{
+            credentials: "include"
+        });
         const changes = await changesResponse.json();
         this.changes = changes;
         this.isLoading = false;
@@ -58,7 +63,9 @@ export class ChangeStore {
 
     @action
     loadProjectChanges = async (changeId: number) => {
-        const changesResponse = await fetch(`http://localhost:5000/projects/${changeId}/changes`);
+        const changesResponse = await fetch(`http://localhost:5000/projects/${changeId}/changes`, {
+            credentials: "include"
+        });
         const changes = await changesResponse.json();
         this.changes = changes;
         this.isLoading = false;

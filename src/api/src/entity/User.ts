@@ -10,7 +10,7 @@ export class User {
     id: number;
 
     @Column()
-    googleId: number;
+    googleId: string;
 
     @OneToMany(() => Work, work => work.author)
     works: Work[];

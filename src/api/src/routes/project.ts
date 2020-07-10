@@ -1,25 +1,26 @@
-import { Application, Request, Response } from "express";
-import { getConnection } from "typeorm";
-import { Project } from "../entity/Project";
-import { Work } from "../entity/Work";
-import { Change } from "../entity/Change";
+import {Application, Request, Response} from "express";
+import {getConnection} from "typeorm";
+import {Project} from "../entity/Project";
+import {Work} from "../entity/Work";
+import {Change} from "../entity/Change";
+import {ensureAuthenticated} from "../config/passport";
 
 
 export function projectRoutes(app: Application): void {
     const projectRepository = getConnection().getRepository(Project);
 
-    app.get("/projects", async function (req: Request, res: Response) {
+    app.get("/projects", ensureAuthenticated, async function (req: Request, res: Response) {
         const projects = await projectRepository.find();
         res.json(projects);
     });
 
-    app.get("/projects/:id", async function (req: Request, res: Response) {
+    app.get("/projects/:id", ensureAuthenticated, async function (req: Request, res: Response) {
         const results = await projectRepository.findOne(req.params.id);
         return res.send(results);
     });
 
-    app.get("/projects/:id/works", async function (req: Request, res: Response) {
-        const results = await projectRepository.findOne(req.params.id, { relations: ["works"] });
+    app.get("/projects/:id/works", ensureAuthenticated, async function (req: Request, res: Response) {
+        const results = await projectRepository.findOne(req.params.id, {relations: ["works"]});
 
         results.works = await Promise.all(results.works.map(async (work) => addAuthorToWork(work)))
         results.works = await Promise.all(results.works.map(async (work) => addLatestChange(work)))
@@ -27,29 +28,31 @@ export function projectRoutes(app: Application): void {
         return res.send(results.works);
     });
 
-    app.get("/projects/:id/changes", async function (req: Request, res: Response) {
-        const results = await projectRepository.findOne(req.params.id, { relations: ["works"] });
+    app.get("/projects/:id/changes", ensureAuthenticated, async function (req: Request, res: Response) {
+        const results = await projectRepository.findOne(req.params.id, {relations: ["works"]});
 
         results.works = await Promise.all(results.works.map(async (work) => addChanges(work)))
         let changes = [];
         results.works.forEach(work => {
-            work.changes.forEach(change => { changes.push(change) })
+            work.changes.forEach(change => {
+                changes.push(change)
+            })
         })
         changes = await Promise.all(changes.map(async (change) => addAuthorToChange(change)))
         return res.send(changes);
     });
 
-    app.get("/projects/:id/owner", async function (req: Request, res: Response) {
-        const results = await projectRepository.findOne(req.params.id, { relations: ["owner"] });
+    app.get("/projects/:id/owner", ensureAuthenticated, async function (req: Request, res: Response) {
+        const results = await projectRepository.findOne(req.params.id, {relations: ["owner"]});
         return res.send(results.owner);
     });
 
-    app.get("/projects/:id/invitedUsers", async function (req: Request, res: Response) {
-        const results = await projectRepository.findOne(req.params.id, { relations: ["invitedUsers"] });
+    app.get("/projects/:id/invitedUsers", ensureAuthenticated, async function (req: Request, res: Response) {
+        const results = await projectRepository.findOne(req.params.id, {relations: ["invitedUsers"]});
         return res.send(results.invitedUsers);
     });
 
-    app.post("/projects/:id/invitedUsers/:userId", async function (req: Request, res: Response) {
+    app.post("/projects/:id/invitedUsers/:userId", ensureAuthenticated, async function (req: Request, res: Response) {
         const results = await projectRepository
             .createQueryBuilder()
             .relation(Project, "invitedUsers")
@@ -59,20 +62,20 @@ export function projectRoutes(app: Application): void {
         return res.send(results);
     });
 
-    app.post("/projects", async function (req: Request, res: Response) {
+    app.post("/projects", ensureAuthenticated, async function (req: Request, res: Response) {
         const Project = await projectRepository.create(req.body);
         const results = await projectRepository.save(Project);
         return res.send(results);
     });
 
-    app.put("/projects/:id", async function (req: Request, res: Response) {
+    app.put("/projects/:id", ensureAuthenticated, async function (req: Request, res: Response) {
         const Project = await projectRepository.findOne(req.params.id);
         projectRepository.merge(Project, req.body);
         const results = await projectRepository.save(Project);
         return res.send(results);
     });
 
-    app.delete("/projects/:id", async function (req: Request, res: Response) {
+    app.delete("/projects/:id", ensureAuthenticated, async function (req: Request, res: Response) {
         await projectRepository.delete(req.params.id);
         return res.status(204).send();
     });
