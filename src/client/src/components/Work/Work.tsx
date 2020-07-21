@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import { Breadcrumb } from '../Breadcrumb';
-import { Menu } from './Menu';
-import { Header } from './Header';
-import { Form } from './Form';
+import React from 'react';
+import {Breadcrumb} from '../Breadcrumb';
+import {Menu} from './Menu';
+import {Header} from './Header';
+import {Form} from './Form';
+import {useParams} from "react-router-dom";
 
 const breadcrumbItems = [
     {
@@ -15,15 +16,15 @@ const breadcrumbItems = [
     }
 ]
 
-export class Work extends Component {
-    render() {
-        return (
-            <div className="container">
-                <Breadcrumb items={breadcrumbItems} />
-                <Menu />
-                <Header name="Work name" />
-                <Form workId={1} />
-            </div>
-        )
-    }
+export function Work() {
+    const { id } = useParams();
+
+    return (
+        <div className="container">
+            <Breadcrumb items={breadcrumbItems}/>
+            <Menu/>
+            <Header workId={id}/>
+            <Form workId={id}/>
+        </div>
+    )
 }

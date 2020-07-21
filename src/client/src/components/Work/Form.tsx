@@ -36,6 +36,9 @@ export class Form extends Component<IFormProps, IFormState> {
     }
 
     render() {
+        if (!this.props.WorkStore?.work) {
+            return <p>Loading...</p>
+        }
         return (
             <div>
                 <div className="work-editor">
@@ -68,32 +71,38 @@ export class Form extends Component<IFormProps, IFormState> {
     }
 
     handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
         if (this.state.name === '') {
             return
         }
 
         const editWork: IWorkEditContent = {
-            id: this.props.workId,
+            id: +this.props.workId,
             content: this.state.model,
         }
 
         const createChange: IChangeCreate = {
-            work: this.props.workId,
+            work: +this.props.workId,
             author: 1,
             name: this.state.name,
             created: (new Date()).toUTCString(),
             content: this.state.model,
         }
 
-        console.log(editWork);
-
         this.setState({
             ...this.state,
             name: ''
         })
 
-        await this.props.WorkStore!.editWork(editWork);
-        await this.props.ChangeStore!.addChange(createChange);
-        e.preventDefault();
+        await this.props.ChangeStore?.addChange(createChange);
+        await this.props.WorkStore?.editWork(editWork);
+    }
+
+    async componentDidMount() {
+        await this.props.WorkStore?.find(this.props.workId);
+        this.setState({
+            ...this.state,
+            model: this.props.WorkStore?.work!.content
+        })
     }
 }

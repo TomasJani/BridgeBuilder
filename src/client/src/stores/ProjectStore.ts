@@ -1,5 +1,5 @@
-import {observable, action} from "mobx";
-import {IProject} from "../interfaces/entities/Project";
+import {action, observable} from "mobx";
+import {IProject, IProjectCreate} from "../interfaces/entities/Project";
 
 export class ProjectStore {
     @observable
@@ -14,8 +14,7 @@ export class ProjectStore {
     }
 
     @action
-    addProject = async (project: IProject) => {
-        this.projects.push(project);
+    addProject = async (project: IProjectCreate) => {
         const response = await fetch("http://localhost:5000/projects", {
             method: 'POST',
             headers: {
@@ -24,12 +23,14 @@ export class ProjectStore {
             body: JSON.stringify(project),
             credentials: "include"
         });
+        const newProject: IProject = await response.json();
+        this.projects.push(newProject);
     }
 
     @action
     editProject = async (project: IProject) => {
         this.projects.push(project);
-        const response = await fetch(`http://localhost:5000/projects/${project.id}`, {
+        await fetch(`http://localhost:5000/projects/${project.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -43,7 +44,7 @@ export class ProjectStore {
     deleteProject = async (project: IProject) => {
         const removeIndex = this.projects.findIndex(storeProject => storeProject.id === project.id);
         this.projects.splice(removeIndex, 1);
-        const response = await fetch(`http://localhost:5000/projects/${project.id}`, {
+        await fetch(`http://localhost:5000/projects/${project.id}`, {
             method: 'DELETE',
             credentials: "include"
         });
@@ -51,12 +52,12 @@ export class ProjectStore {
 
     @action
     loadProjects = async (userId: number) => {
+        this.isLoading = true;
         const url = `http://localhost:5000/users/${userId}/relatedProjects`;
         const projectsResponse = await fetch(url, {credentials: 'include'});
-        const projects = await projectsResponse.json();
-        console.log(projectsResponse);
-        console.log(projects);
+        let projects = await projectsResponse.json();
         this.projects = projects;
+        console.log(projects);
         this.isLoading = false;
     }
 }

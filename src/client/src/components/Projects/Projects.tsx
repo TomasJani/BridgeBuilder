@@ -8,7 +8,7 @@ import {AddProjectForm} from "./AddProjectForm";
 const breadcrumbItems = [
     {
         name: "Projects",
-        url: "#"
+        url: "/projects"
     }
 ]
 

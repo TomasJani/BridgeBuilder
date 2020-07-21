@@ -2,6 +2,7 @@ import React from 'react';
 import '../../styles/projects/projects-menu.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
+import {Link} from "react-router-dom";
 
 interface IProjectsMenuProps {
     projectId: number;
@@ -12,15 +13,15 @@ export function ProjectsMenu() {
         <div className="projects-menu">
             <ul className="projects-menu__items">
                 <li className="projects-menu__item">
-                    <a className="projects-menu__link" href="#">Project</a>
+                    <span className="projects-menu__link">Project</span>
                 </li>
                 <li className="projects-menu__item">
-                    <a className="projects-menu__link" href="#">User</a>
+                    <span className="projects-menu__link">User</span>
                 </li>
             </ul>
-            <a href="#" className="projects-menu__item projects-menu__settings">
+            <Link to="#" className="projects-menu__item projects-menu__settings">
                 <FontAwesomeIcon icon={faEllipsisV} />
-            </a>
+            </Link>
         </div>
     )
 }

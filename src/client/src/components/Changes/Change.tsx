@@ -1,12 +1,10 @@
 import React from 'react';
-import { IUser } from '../../interfaces/entities/User';
 import '../../styles/change/change.css'
+import {Link} from "react-router-dom";
+import {IChange} from "../../interfaces/entities/Change";
 
 interface IChangeProps {
-    id: number;
-    name: string;
-    created: string;
-    author: IUser;
+    change: IChange
 }
 
 export function Change(props: IChangeProps) {
@@ -14,13 +12,13 @@ export function Change(props: IChangeProps) {
         <div className="change">
             <ul className="change__items">
                 <li className="change__item">
-                    <a className="change__link" href="#">{props.name}</a>
+                    <Link className="change__link" to={`changes/${props.change.id}`}>{props.change.name}</Link>
                 </li>
                 <li className="change__item">
-                    <a className="change__link" href="#">{props.author.username}</a>
+                    <Link className="change__link" to="#">{props.change.author.username}</Link>
                 </li>
             </ul>
-            <span className="change__link change__date">{props.created}</span>
+            <span className="change__link change__date">{props.change.created}</span>
         </div>
     )
 }

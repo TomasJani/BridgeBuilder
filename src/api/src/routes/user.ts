@@ -2,6 +2,8 @@ import {Application, Request, Response} from "express";
 import {Connection, getConnection} from "typeorm";
 import {User} from "../entity/User";
 import {ensureAuthenticated} from "../config/passport";
+import {Change} from "../entity/Change";
+import {Work} from "../entity/Work";
 
 
 export function userRoutes(app: Application): void {
@@ -28,9 +30,11 @@ export function userRoutes(app: Application): void {
     });
 
     app.get("/users/:id/relatedProjects", ensureAuthenticated, async function (req: Request, res: Response) {
-        const resultsOwn = await usersRepository.findOne(req.params.id, {relations: ["ownProjects"]});
-        const resultsInvited = await usersRepository.findOne(req.params.id, {relations: ["invitedToProjects"]});
-        return res.send(resultsOwn.ownProjects.concat(resultsInvited.invitedToProjects));
+        const author = await usersRepository.findOne(req.params.id);
+        const resultsOwn = await usersRepository.findOne(req.params.id, {relations: ["ownProjects", "invitedToProjects"]});
+        const projects = resultsOwn.ownProjects.concat(resultsOwn.invitedToProjects);
+        projects.forEach(project => project.owner = author)
+        return res.send(projects);
     });
 
 

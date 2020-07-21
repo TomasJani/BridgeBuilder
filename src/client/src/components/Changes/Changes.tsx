@@ -27,8 +27,7 @@ interface IChangesProps {
 export class Changes extends Component<IChangesProps> {
     render() {
         return (
-            <div className="container">
-                <Breadcrumb items={breadcrumbItems} />
+            <div>
                 {this.processChanges()}
             </div>
         )
@@ -45,7 +44,7 @@ export class Changes extends Component<IChangesProps> {
 
     processChanges() {
         return this.props.ChangeStore?.changes.map(change => {
-            return <Change id={change.id} name={change.name} author={change.author} created={change.created} />
+            return <Change change={change} />
         })
     }
 }

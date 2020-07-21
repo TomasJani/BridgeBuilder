@@ -1,5 +1,5 @@
-import {observable, action} from "mobx";
-import {IChange, IChangeEdit, IChangeCreate} from "../interfaces/entities/Change";
+import {action, observable} from "mobx";
+import {IChange, IChangeCreate, IChangeEdit} from "../interfaces/entities/Change";
 
 export class ChangeStore {
     @observable
@@ -23,13 +23,13 @@ export class ChangeStore {
             body: JSON.stringify(change),
             credentials: "include"
         });
-        const newWork: IChange = await response.json();
-        this.changes.push(newWork);
+        const newChange: IChange = await response.json();
+        this.changes.push(newChange);
     }
 
     @action
     editChange = async (change: IChangeEdit) => {
-        const response = await fetch(`http://localhost:5000/changes/${change.id}`, {
+        await fetch(`http://localhost:5000/changes/${change.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -45,7 +45,7 @@ export class ChangeStore {
     deleteChange = async (change: IChange) => {
         const removeIndex = this.changes.findIndex(storeChange => storeChange.id === change.id);
         this.changes.splice(removeIndex, 1);
-        const response = await fetch(`http://localhost:5000/changes/${change.id}`, {
+        await fetch(`http://localhost:5000/changes/${change.id}`, {
             method: 'DELETE',
             credentials: "include"
         });
@@ -53,21 +53,21 @@ export class ChangeStore {
 
     @action
     loadWorkChanges = async (workId: number) => {
+        this.isLoading = true;
         const changesResponse = await fetch(`http://localhost:5000/works/${workId}/changes`,{
             credentials: "include"
         });
-        const changes = await changesResponse.json();
-        this.changes = changes;
+        this.changes = await changesResponse.json();
         this.isLoading = false;
     }
 
     @action
     loadProjectChanges = async (changeId: number) => {
+        this.isLoading = true;
         const changesResponse = await fetch(`http://localhost:5000/projects/${changeId}/changes`, {
             credentials: "include"
         });
-        const changes = await changesResponse.json();
-        this.changes = changes;
+        this.changes = await changesResponse.json();
         this.isLoading = false;
     }
 }

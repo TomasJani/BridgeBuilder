@@ -6,10 +6,10 @@ import { WorkStore } from "./WorkStore";
 import { IWork } from "../interfaces/entities/Work";
 import { Stores } from "./Stores";
 
-export function createStores(initialProjects: IProject[] = [], initlChanges: IChange[] = [], initlWork: IWork[] = []) {
+export function createStores(initialProjects: IProject[] = [], initialChanges: IChange[] = [], initialWork: IWork[] = []) {
     const projectStore = new ProjectStore(initialProjects);
-    const changeStore = new ChangeStore(initlChanges);
-    const workStore = new WorkStore(initlWork);
+    const changeStore = new ChangeStore(initialChanges);
+    const workStore = new WorkStore(initialWork);
 
     return {
         [Stores.PROJECT_STORE]: projectStore,

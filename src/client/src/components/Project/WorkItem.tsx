@@ -1,14 +1,10 @@
 import React from 'react';
-import { IChange } from '../../interfaces/entities/Change';
 import '../../styles/work-edit/work-header.css'
-import { IUser } from '../../interfaces/entities/User';
+import {Link} from "react-router-dom";
+import {IWork} from "../../interfaces/entities/Work";
 
 interface IWorkProps {
-    id: number;
-    name: string;
-    author: IUser;
-    // lastChange: IChange;
-    created: string;
+    work: IWork
 }
 
 function WorkItem(props: IWorkProps) {
@@ -16,16 +12,13 @@ function WorkItem(props: IWorkProps) {
         <div className="work-header">
             <ul className="work-header__items">
                 <li className="work-header__item">
-                    <a className="work-header__link" href="#">{props.name}</a>
+                    <Link className="work-header__link" to={`/works/${props.work.id}`}>{props.work.name}</Link>
                 </li>
                 <li className="work-header__item">
-                    <a className="work-header__link" href="#">{props.author.username}</a>
-                </li>
-                <li className="work-header__item">
-                    <a className="work-header__link" href="#">22.1.2420</a>
+                    <Link className="work-header__link" to="#">{props.work.author.username}</Link>
                 </li>
             </ul>
-            <span className="work-header__link work-header__date">{props.created}</span>
+            <span className="work-header__link work-header__date">{props.work.created}</span>
         </div>
     )
 }
