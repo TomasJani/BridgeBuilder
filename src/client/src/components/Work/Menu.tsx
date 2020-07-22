@@ -17,7 +17,7 @@ export function Menu() {
                     <Link className="work-menu__link" to={`${url}/changes`}>Changes</Link>
                 </li>
             </ul>
-            <a href="#" className="work-menu__item work-menu__settings"><FontAwesomeIcon icon={faEllipsisV} /></a>
+            <Link to="#" className="work-menu__item work-menu__settings"><FontAwesomeIcon icon={faEllipsisV} /></Link>
         </div>
     )
 }

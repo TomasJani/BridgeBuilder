@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import '../../styles/login/login.css';
 import {ReactComponent as GoogleIcon} from "./google_icon.svg";
-import {LOGIN_ROUTE, LOGOUT_ROUTE, SERVER_BASE_URL} from "../../constants";
+import {LOGIN_ROUTE, SERVER_BASE_URL} from "../../constants";
 
 interface ILoginProps {
 
@@ -26,7 +26,7 @@ export class Login extends Component<ILoginProps, ILoginState> {
     }
 
     login() {
-        window.location.href = `${SERVER_BASE_URL}${LOGIN_ROUTE}`;
+        window.location.href = `$${SERVER_BASE_URL}${LOGIN_ROUTE}`;
     }
 }
 

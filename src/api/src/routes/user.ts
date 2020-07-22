@@ -1,9 +1,7 @@
 import {Application, Request, Response} from "express";
-import {Connection, getConnection} from "typeorm";
+import {getConnection} from "typeorm";
 import {User} from "../entity/User";
 import {ensureAuthenticated} from "../config/passport";
-import {Change} from "../entity/Change";
-import {Work} from "../entity/Work";
 
 
 export function userRoutes(app: Application): void {

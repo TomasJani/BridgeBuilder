@@ -1,7 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, ManyToOne } from "typeorm";
-import { User } from "./User";
-import { Work } from "./Work";
-import { Change } from "./Change";
+import {Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {User} from "./User";
+import {Work} from "./Work";
 
 @Entity()
 export class Project {

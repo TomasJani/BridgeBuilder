@@ -9,6 +9,52 @@ import {ensureAuthenticated} from "../config/passport";
 export function projectRoutes(app: Application): void {
     const projectRepository = getConnection().getRepository(Project);
 
+    async function addAuthorToWork(work: Work): Promise<Work> {
+        work.author = await getConnection()
+            .createQueryBuilder()
+            .relation(Work, "author")
+            .of(work)
+            .loadOne();
+        return work;
+    }
+
+    async function addAuthorToChange(change: Change): Promise<Change> {
+        change.author = await getConnection()
+            .createQueryBuilder()
+            .relation(Change, "author")
+            .of(change)
+            .loadOne();
+        return change;
+    }
+
+    async function addChanges(work: Work): Promise<Work> {
+        work.changes = await getConnection()
+            .createQueryBuilder()
+            .relation(Work, "changes")
+            .of(work)
+            .loadMany();
+        return work;
+    }
+
+    async function addLatestChange(work: Work): Promise<Work> {
+        work.changes = await getConnection()
+            .createQueryBuilder()
+            .relation(Work, "changes")
+            .of(work)
+            .loadMany();
+        work.changes.sort(function (a, b) {
+            if (Date.parse(a.created) > Date.parse(b.created)) {
+                return -1;
+            }
+            if (Date.parse(a.created) < Date.parse(b.created)) {
+                return 1;
+            }
+            return 0;
+        });
+        work.changes = [work.changes[0]];
+        return work;
+    }
+
     app.get("/projects", ensureAuthenticated, async function (req: Request, res: Response) {
         const projects = await projectRepository.find();
         res.json(projects);
@@ -79,50 +125,4 @@ export function projectRoutes(app: Application): void {
         await projectRepository.delete(req.params.id);
         return res.status(204).send();
     });
-
-    async function addAuthorToWork(work: Work) {
-        work.author = await getConnection()
-            .createQueryBuilder()
-            .relation(Work, "author")
-            .of(work)
-            .loadOne();
-        return work;
-    }
-
-    async function addAuthorToChange(change: Change): Promise<Change> {
-        change.author = await getConnection()
-            .createQueryBuilder()
-            .relation(Change, "author")
-            .of(change)
-            .loadOne();
-        return change;
-    }
-
-    async function addChanges(work: Work): Promise<Work> {
-        work.changes = await getConnection()
-            .createQueryBuilder()
-            .relation(Work, "changes")
-            .of(work)
-            .loadMany();
-        return work;
-    }
-
-    async function addLatestChange(work: Work): Promise<Work> {
-        work.changes = await getConnection()
-            .createQueryBuilder()
-            .relation(Work, "changes")
-            .of(work)
-            .loadMany();
-        work.changes.sort(function (a, b) {
-            if (Date.parse(a.created) > Date.parse(b.created)) {
-                return -1;
-            }
-            if (Date.parse(a.created) < Date.parse(b.created)) {
-                return 1;
-            }
-            return 0;
-        });
-        work.changes = [work.changes[0]];
-        return work;
-    }
 }

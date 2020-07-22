@@ -1,20 +1,8 @@
-import React, { Component } from 'react';
-import { Breadcrumb } from '../Breadcrumb';
-import { inject, observer } from 'mobx-react';
-import { Stores } from '../../stores/Stores';
-import { ChangeStore } from '../../stores/ChangeStore';
-import { Change } from './Change';
-
-const breadcrumbItems = [
-    {
-        name: "Javascript",
-        url: "javscript.com"
-    },
-    {
-        name: "Visual Studio Code",
-        url: "javscript.com/viusal-studio-code"
-    }
-]
+import React, {Component} from 'react';
+import {inject, observer} from 'mobx-react';
+import {Stores} from '../../stores/Stores';
+import {ChangeStore} from '../../stores/ChangeStore';
+import {Change} from './Change';
 
 interface IChangesProps {
     projectId?: number;

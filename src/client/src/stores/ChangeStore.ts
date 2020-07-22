@@ -1,5 +1,6 @@
 import {action, observable} from "mobx";
 import {IChange, IChangeCreate, IChangeEdit} from "../interfaces/entities/Change";
+import {SERVER_BASE_URL} from "../constants";
 
 export class ChangeStore {
     @observable
@@ -15,7 +16,7 @@ export class ChangeStore {
 
     @action
     addChange = async (change: IChangeCreate) => {
-        const response = await fetch("http://localhost:5000/changes", {
+        const response = await fetch(`${SERVER_BASE_URL}/changes`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -29,7 +30,7 @@ export class ChangeStore {
 
     @action
     editChange = async (change: IChangeEdit) => {
-        await fetch(`http://localhost:5000/changes/${change.id}`, {
+        await fetch(`${SERVER_BASE_URL}/changes/${change.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -45,7 +46,7 @@ export class ChangeStore {
     deleteChange = async (change: IChange) => {
         const removeIndex = this.changes.findIndex(storeChange => storeChange.id === change.id);
         this.changes.splice(removeIndex, 1);
-        await fetch(`http://localhost:5000/changes/${change.id}`, {
+        await fetch(`${SERVER_BASE_URL}/changes/${change.id}`, {
             method: 'DELETE',
             credentials: "include"
         });
@@ -53,8 +54,7 @@ export class ChangeStore {
 
     @action
     loadWorkChanges = async (workId: number) => {
-        this.isLoading = true;
-        const changesResponse = await fetch(`http://localhost:5000/works/${workId}/changes`,{
+        const changesResponse = await fetch(`${SERVER_BASE_URL}/works/${workId}/changes`,{
             credentials: "include"
         });
         this.changes = await changesResponse.json();
@@ -63,8 +63,7 @@ export class ChangeStore {
 
     @action
     loadProjectChanges = async (changeId: number) => {
-        this.isLoading = true;
-        const changesResponse = await fetch(`http://localhost:5000/projects/${changeId}/changes`, {
+        const changesResponse = await fetch(`${SERVER_BASE_URL}/projects/${changeId}/changes`, {
             credentials: "include"
         });
         this.changes = await changesResponse.json();

@@ -3,11 +3,19 @@ import {getConnection} from "typeorm";
 import {Work} from "../entity/Work";
 import {Change} from "../entity/Change";
 import {ensureAuthenticated} from "../config/passport";
-import {User} from "../entity/User";
 
 
 export function workRoutes(app: Application): void {
     const workRepository = getConnection().getRepository(Work);
+
+    async function addAuthor(change: Change): Promise<Change> {
+        change.author = await getConnection()
+            .createQueryBuilder()
+            .relation(Change, "author")
+            .of(change)
+            .loadOne();
+        return change;
+    }
 
     app.get("/works", ensureAuthenticated, async function (req: Request, res: Response) {
         const works = await workRepository.find();
@@ -53,13 +61,4 @@ export function workRoutes(app: Application): void {
         await workRepository.delete(req.params.id);
         return res.status(204).send();
     });
-
-    async function addAuthor(change: Change): Promise<Change> {
-        change.author = await getConnection()
-            .createQueryBuilder()
-            .relation(Change, "author")
-            .of(change)
-            .loadOne();
-        return change;
-    }
 }

@@ -1,5 +1,6 @@
 import {action, observable} from "mobx";
 import {IProject, IProjectCreate} from "../interfaces/entities/Project";
+import {SERVER_BASE_URL} from "../constants";
 
 export class ProjectStore {
     @observable
@@ -15,7 +16,7 @@ export class ProjectStore {
 
     @action
     addProject = async (project: IProjectCreate) => {
-        const response = await fetch("http://localhost:5000/projects", {
+        const response = await fetch(`${SERVER_BASE_URL}/projects`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -24,7 +25,7 @@ export class ProjectStore {
             credentials: "include"
         });
         const newProject: IProject = await response.json();
-        let author = await fetch(`http://localhost:5000/projects/${newProject.id}/owner`, {credentials: "include"});
+        let author = await fetch(`${SERVER_BASE_URL}/projects/${newProject.id}/owner`, {credentials: "include"});
         newProject.owner = await author.json();
         this.projects.push(newProject);
     }
@@ -32,7 +33,7 @@ export class ProjectStore {
     @action
     editProject = async (project: IProject) => {
         this.projects.push(project);
-        await fetch(`http://localhost:5000/projects/${project.id}`, {
+        await fetch(`${SERVER_BASE_URL}/projects/${project.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -46,7 +47,7 @@ export class ProjectStore {
     deleteProject = async (project: IProject) => {
         const removeIndex = this.projects.findIndex(storeProject => storeProject.id === project.id);
         this.projects.splice(removeIndex, 1);
-        await fetch(`http://localhost:5000/projects/${project.id}`, {
+        await fetch(`${SERVER_BASE_URL}/projects/${project.id}`, {
             method: 'DELETE',
             credentials: "include"
         });
@@ -54,7 +55,7 @@ export class ProjectStore {
 
     @action
     loadProjects = async (userId: number) => {
-        const url = `http://localhost:5000/users/${userId}/relatedProjects`;
+        const url = `${SERVER_BASE_URL}/users/${userId}/relatedProjects`;
         const projectsResponse = await fetch(url, {credentials: 'include'});
         this.projects = await projectsResponse.json();
         this.isLoading = false;

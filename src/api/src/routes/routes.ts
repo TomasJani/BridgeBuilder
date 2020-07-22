@@ -1,5 +1,4 @@
 import {Application} from "express"
-import cors from "cors"
 import {workRoutes} from "./work";
 import {changeRoutes} from "./change";
 import {userRoutes} from "./user";
