@@ -28,6 +28,7 @@ export class Changes extends Component<IChangesProps> {
     render() {
         return (
             <div>
+                <hr/>
                 {this.processChanges()}
             </div>
         )

@@ -23,6 +23,9 @@ export class Header extends Component<IHeaderProps> {
                     <li className="work-header__item">
                         <span className="work-header__link">{work.name}</span>
                     </li>
+                    <li className="work-header__item">
+                        <span className="work-header__link">{work.author.username}</span>
+                    </li>
                 </ul>
                 <span className="work-header__link work-header__date">{work.created}</span>
             </div>

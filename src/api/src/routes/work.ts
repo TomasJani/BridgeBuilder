@@ -3,7 +3,7 @@ import {getConnection} from "typeorm";
 import {Work} from "../entity/Work";
 import {Change} from "../entity/Change";
 import {ensureAuthenticated} from "../config/passport";
-import {IWork} from "../../../client/src/interfaces/entities/Work";
+import {User} from "../entity/User";
 
 
 export function workRoutes(app: Application): void {
@@ -15,7 +15,7 @@ export function workRoutes(app: Application): void {
     });
 
     app.get("/works/:id", ensureAuthenticated, async function (req: Request, res: Response) {
-        const results = await workRepository.findOne(req.params.id);
+        const results = await workRepository.findOne(req.params.id, {relations: ["author"]});
         return res.send(results);
     });
 

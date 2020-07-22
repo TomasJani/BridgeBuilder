@@ -19,10 +19,9 @@ export class WorkStore {
 
     @action
     find = async (workId: number) => {
-        const url = `http://localhost:5000/works`
+        const url = `http://localhost:5000/works/${workId}`;
         const worksResponse = await fetch(url, {credentials: "include"});
-        let works: Array<IWork> = await worksResponse.json();
-        this.work = works.find((work, _) => work.id === +workId);
+        this.work = await worksResponse.json();
         this.isLoading = true;
     }
 
@@ -37,6 +36,8 @@ export class WorkStore {
             credentials: "include"
         });
         const newWork: IWork = await response.json();
+        let author = await fetch(`http://localhost:5000/works/${newWork.id}/author`, {credentials: "include"});
+        newWork.author = await author.json();
         this.works.push(newWork);
     }
 

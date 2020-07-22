@@ -24,6 +24,8 @@ export class ProjectStore {
             credentials: "include"
         });
         const newProject: IProject = await response.json();
+        let author = await fetch(`http://localhost:5000/projects/${newProject.id}/owner`, {credentials: "include"});
+        newProject.owner = await author.json();
         this.projects.push(newProject);
     }
 
@@ -52,12 +54,9 @@ export class ProjectStore {
 
     @action
     loadProjects = async (userId: number) => {
-        this.isLoading = true;
         const url = `http://localhost:5000/users/${userId}/relatedProjects`;
         const projectsResponse = await fetch(url, {credentials: 'include'});
-        let projects = await projectsResponse.json();
-        this.projects = projects;
-        console.log(projects);
+        this.projects = await projectsResponse.json();
         this.isLoading = false;
     }
 }

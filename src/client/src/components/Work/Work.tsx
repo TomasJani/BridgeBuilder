@@ -3,7 +3,9 @@ import {Breadcrumb} from '../Breadcrumb';
 import {Menu} from './Menu';
 import {Header} from './Header';
 import {Form} from './Form';
-import {useParams} from "react-router-dom";
+import {Route, Switch, useParams, useRouteMatch} from "react-router-dom";
+import {ProjectWorks} from "../Project/ProjectWorks";
+import {Changes} from "../Changes/Changes";
 
 const breadcrumbItems = [
     {
@@ -18,13 +20,23 @@ const breadcrumbItems = [
 
 export function Work() {
     const { id } = useParams();
+    let {path} = useRouteMatch();
 
     return (
         <div className="container">
             <Breadcrumb items={breadcrumbItems}/>
             <Menu/>
             <Header workId={id}/>
-            <Form workId={id}/>
+
+            <Switch>
+                <Route exact path={`${path}`}>
+                    <Form workId={id}/>
+                </Route>
+                <Route path={`${path}/changes`}>
+                    <Changes workId={id} />
+                </Route>
+            </Switch>
+
         </div>
     )
 }
