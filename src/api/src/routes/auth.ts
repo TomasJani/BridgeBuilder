@@ -17,11 +17,12 @@ export function authRoutes(app: Application): void {
     app.get("/auth/getUser", (req: Request, res: Response) => {
         console.log("user - " + req.user);
         if (req.user === undefined) {
-            res.send({});
+            // res.send({});
+            return res.status(204).send();
         } else {
-            res.send({
-                "user": req.user
-            });
+            return res.send(
+                req.user
+            );
         }
     });
 

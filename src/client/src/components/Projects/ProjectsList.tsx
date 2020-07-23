@@ -1,31 +1,32 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Project} from './Project';
+import {inject, observer} from "mobx-react";
+import {Stores} from "../../stores/Stores";
+import {ProjectStore} from "../../stores/ProjectStore";
+import {UserStore} from "../../stores/UserStore";
 
-const projects = [
-    {
-        id: 1,
-        name: "Project 1",
-        created: new Date().toUTCString(),
-        owner: {
-            username: "Michalis"
-        }
-    },
+interface IProjectListProps {
+    ProjectStore?: ProjectStore
+    UserStore?: UserStore
+}
 
-    {
-        id: 2,
-        name: "Project 2",
-        owner: {
-            username: "Tomasis"
-        },
-        created: new Date().toUTCString()
+@inject(Stores.PROJECT_STORE)
+@inject(Stores.USER_STORE)
+@observer
+export class ProjectsList extends Component<IProjectListProps> {
+    render() {
+        return (
+            <div>
+                {this.props.ProjectStore?.projects.map(project =>
+                    <Project project={project}/>
+                    )
+                }
+            </div>
+        )
     }
-]
 
-
-export function ProjectsList() {
-    return (
-        <div>
-            {projects.map(project => <Project key={project.id} {...project}/>)}
-        </div>
-    )
+    async componentDidMount() {
+        await this.props.UserStore?.login();
+        await this.props.ProjectStore?.loadProjects(this.props.UserStore?.user?.id!);
+    }
 }

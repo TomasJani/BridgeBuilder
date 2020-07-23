@@ -3,6 +3,7 @@ import { IProject } from "./Project";
 import { IChange } from "./Change";
 
 export interface IWork {
+    newWork: Response;
     id: number;
     author: IUser;
     project: IProject;

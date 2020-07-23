@@ -1,16 +1,10 @@
 import React from 'react';
 import '../../styles/projects/project.css'
-
-interface IDummyUser {
-    username: string
-}
-
+import {Link} from "react-router-dom";
+import {IProject} from "../../interfaces/entities/Project";
 
 interface IProjectProps {
-    id: number;
-    name: string;
-    created: string;
-    owner: IDummyUser;
+    project: IProject;
 }
 
 export function Project(props: IProjectProps) {
@@ -18,13 +12,13 @@ export function Project(props: IProjectProps) {
         <div className="project-header">
             <ul className="project-header__items">
                 <li className="project-header__item">
-                    <a className="project-header__link" href="#">{props.name}</a>
+                    <Link className="project-header__link" to={`/projects/${props.project.id}/works`}>{props.project.name}</Link>
                 </li>
                 <li className="project-header__item">
-                    <a className="project-header__link" href="#">{props.owner.username}</a>
+                    <Link className="project-header__link" to="#">{props.project.owner.username}</Link>
                 </li>
             </ul>
-            <span className="project-header__link work-header__date">{props.created}</span>
+            <span className="project-header__link work-header__date">{props.project.created}</span>
         </div>
     )
 }

@@ -1,6 +1,5 @@
 import {IUser} from "./User";
 import {IWork} from "./Work";
-import {IChange} from "./Change";
 
 export interface IProject {
     id: number;
@@ -9,5 +8,10 @@ export interface IProject {
     owner: IUser;
     invitedUsers: IUser[];
     works: IWork[];
-    changes: IChange[];
+}
+
+export interface IProjectCreate {
+    name: string;
+    created: string;
+    owner: number;
 }

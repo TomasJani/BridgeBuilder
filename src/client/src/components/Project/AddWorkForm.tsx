@@ -7,6 +7,7 @@ import { Stores } from '../../stores/Stores';
 
 interface IAddWorkFormProps {
     WorkStore?: WorkStore;
+    id: number
 }
 
 interface IAddWorkFormState {
@@ -40,12 +41,13 @@ export class AddWorkForm extends Component<IAddWorkFormProps, IAddWorkFormState>
     }
 
     handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
         if (this.state.name === '') {
             return
         }
 
         const newWork: IWorkCreate = {
-            project: 1,
+            project: this.props.id,
             name: this.state.name,
             content: "",
             author: 1,
@@ -57,6 +59,5 @@ export class AddWorkForm extends Component<IAddWorkFormProps, IAddWorkFormState>
             name: ''
         })
         await this.props.WorkStore!.addWork(newWork);
-        e.preventDefault();
     }
 }

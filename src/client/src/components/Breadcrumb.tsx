@@ -1,21 +1,23 @@
-import React from 'react';
+import React, {Component} from 'react';
 import '../styles/breadcrumb.css'
-
-interface IBreadcrumbItem {
-    name: string,
-    url: string
-}
+import {Link} from "react-router-dom";
+import {IBreadcrumbItem} from "../interfaces/entities/BreadcrumbItem";
 
 interface IBreadcrumbProps {
-    items: Array<IBreadcrumbItem>;
+    items?: Array<IBreadcrumbItem>
 }
 
-export function Breadcrumb(props: IBreadcrumbProps) {
-    return (
-        <div className="bradcrumb">
-            {props.items.map((item: IBreadcrumbItem) => {
-                return <span><a className="breadcrumb__link" href={item.url}>{item.name}</a> / </span>
-            })}
-        </div>
-    )
-} 
+export class Breadcrumb extends Component<IBreadcrumbProps>{
+    render() {
+        return (
+            <div className="breadcrumb">
+                <span><Link className="breadcrumb__link" to="/projects">Projects</Link> / </span>
+                {this.props.items?.map((item) => {
+                    if (item)
+                        return <span><Link className="breadcrumb__link" to={item.url}>{item.name}</Link> / </span>
+                    return null;
+                })}
+            </div>
+        )
+    }
+}
