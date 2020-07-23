@@ -33,6 +33,6 @@ export class Header extends Component<IHeaderProps> {
     }
 
     async componentDidMount() {
-        await this.props.WorkStore!.find(this.props.workId);
+        await this.props.WorkStore?.find(this.props.workId);
     }
 }

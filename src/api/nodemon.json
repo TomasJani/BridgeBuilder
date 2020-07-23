@@ -3,5 +3,5 @@
         "src"
     ],
     "ext": "ts",
-    "exec": "npm run build && npm run start"
+    "exec": "rm -rf build/ && npm run build && npm start"
 }

@@ -2,16 +2,18 @@ import React, {Component} from 'react';
 import '../../styles/login/login.css';
 import {ReactComponent as GoogleIcon} from "./google_icon.svg";
 import {LOGIN_ROUTE, SERVER_BASE_URL} from "../../constants";
+import {inject, observer} from "mobx-react";
+import {Stores} from "../../stores/Stores";
+import {UserStore} from "../../stores/UserStore";
 
 interface ILoginProps {
-
+    UserStore?: UserStore
 }
 
-interface ILoginState {
+@inject(Stores.USER_STORE)
+@observer
+export class Login extends Component<ILoginProps> {
 
-}
-
-export class Login extends Component<ILoginProps, ILoginState> {
     render() {
         return (
             <div>
@@ -25,8 +27,8 @@ export class Login extends Component<ILoginProps, ILoginState> {
         )
     }
 
-    login() {
-        window.location.href = `$${SERVER_BASE_URL}${LOGIN_ROUTE}`;
+    login = async () => {
+        window.location.href = `${SERVER_BASE_URL}${LOGIN_ROUTE}`;
     }
 }
 

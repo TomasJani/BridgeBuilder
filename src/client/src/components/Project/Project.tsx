@@ -6,24 +6,13 @@ import {AddWorkForm} from './AddWorkForm';
 import {Route, Switch, useParams, useRouteMatch} from "react-router-dom";
 import {Changes} from "../Changes/Changes";
 
-const breadcrumbItems = [
-    {
-        name: "Javascript",
-        url: "javscript.com"
-    },
-    {
-        name: "Visual Studio Code",
-        url: "javscript.com/viusal-studio-code"
-    }
-]
-
 export function Project() {
     const {id} = useParams();
     let {path} = useRouteMatch();
 
     return (
         <div className="container">
-            <Breadcrumb items={breadcrumbItems}/>
+            <Breadcrumb/>
             <ProjectMenu/>
 
             <Switch>

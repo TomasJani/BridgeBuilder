@@ -3,12 +3,15 @@ import {Project} from './Project';
 import {inject, observer} from "mobx-react";
 import {Stores} from "../../stores/Stores";
 import {ProjectStore} from "../../stores/ProjectStore";
+import {UserStore} from "../../stores/UserStore";
 
 interface IProjectListProps {
     ProjectStore?: ProjectStore
+    UserStore?: UserStore
 }
 
 @inject(Stores.PROJECT_STORE)
+@inject(Stores.USER_STORE)
 @observer
 export class ProjectsList extends Component<IProjectListProps> {
     render() {
@@ -23,6 +26,7 @@ export class ProjectsList extends Component<IProjectListProps> {
     }
 
     async componentDidMount() {
-        await this.props.ProjectStore!.loadProjects(1);
+        await this.props.UserStore?.login();
+        await this.props.ProjectStore?.loadProjects(this.props.UserStore?.user?.id!);
     }
 }

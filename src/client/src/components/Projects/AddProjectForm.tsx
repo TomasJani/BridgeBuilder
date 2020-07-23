@@ -4,9 +4,11 @@ import {inject, observer} from "mobx-react";
 import {Stores} from "../../stores/Stores";
 import {ProjectStore} from "../../stores/ProjectStore";
 import {IProjectCreate} from "../../interfaces/entities/Project";
+import {UserStore} from "../../stores/UserStore";
 
 interface IAddProjectFormProps {
-    ProjectStore?: ProjectStore
+    ProjectStore?: ProjectStore,
+    UserStore?: UserStore
 }
 
 interface IAddProjectFormState {
@@ -14,6 +16,7 @@ interface IAddProjectFormState {
 }
 
 @inject(Stores.PROJECT_STORE)
+@inject(Stores.USER_STORE)
 @observer
 export class AddProjectForm extends Component<IAddProjectFormProps, IAddProjectFormState> {
     constructor(props: IAddProjectFormProps) {
@@ -49,13 +52,13 @@ export class AddProjectForm extends Component<IAddProjectFormProps, IAddProjectF
         const newProject: IProjectCreate = {
             name: this.state.name,
             created: (new Date()).toUTCString(),
-            owner: 1
+            owner: this.props.UserStore?.user!.id
         }
 
         this.setState({
             ...this.state,
             name: ''
         })
-        await this.props.ProjectStore!.addProject(newProject);
+        await this.props.ProjectStore?.addProject(newProject);
     }
 }
