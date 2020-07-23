@@ -5,13 +5,9 @@ import {createStores} from '../stores/CreateStore';
 import {Project} from './Project/Project';
 import {Login} from './Login/Login';
 import {MainMenu} from "./MainMenu";
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch,} from "react-router-dom";
 import {Projects} from "./Projects/Projects";
-import { Work } from "./Work/Work";
+import {Work} from "./Work/Work";
 
 
 const stores = createStores()
@@ -26,8 +22,7 @@ function App() {
                     <Route exact path="/" component={Login}/>
                     <Route exact path="/projects" component={Projects}/>
                     <Route path="/projects/:id" component={Project}/>
-                    <Route path="/works/:id" component={Work}/>
-                    {/*<Route exact path="/changes/:id" component={Change}/>*/}
+                    <Route path="/:projectId/works/:id" component={Work}/>
                 </Switch>
 
                 <Footer/>

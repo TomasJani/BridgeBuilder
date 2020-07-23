@@ -15,7 +15,7 @@ export function ProjectMenu() {
         <div className="project-menu">
             <ul className="project-menu__items">
                 <li className="project-menu__item">
-                    <Link className="project-menu__link" to={`${url}`}>Work</Link>
+                    <Link className="project-menu__link" to={`${url}/works`}>Work</Link>
                 </li>
                 <li className="project-menu__item">
                     <Link className="project-menu__link" to={`${url}/changes`}>Changes</Link>

@@ -16,7 +16,7 @@ export function Project() {
             <ProjectMenu/>
 
             <Switch>
-                <Route exact path={`${path}`}>
+                <Route exact path={`${path}/works`}>
                     <ProjectWorks id={id}/>
                 </Route>
                 <Route path={`${path}/changes`}>

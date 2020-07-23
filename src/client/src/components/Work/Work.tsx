@@ -3,16 +3,19 @@ import {Breadcrumb} from '../Breadcrumb';
 import {Menu} from './Menu';
 import {Header} from './Header';
 import {Form} from './Form';
-import {Route, Switch, useParams, useRouteMatch} from "react-router-dom";
+import {Link, Route, Switch, useParams, useRouteMatch} from "react-router-dom";
 import {Changes} from "../Changes/Changes";
 
 export function Work() {
-    const { id } = useParams();
+    const { id, projectId } = useParams();
     let {path} = useRouteMatch();
 
     return (
         <div className="container">
-            <Breadcrumb/>
+            <Breadcrumb items={[{
+                "name": "Project",
+                "url": `/projects/${projectId}/works`
+            }]}/>
             <Menu/>
             <Header workId={id}/>
 

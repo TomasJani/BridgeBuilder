@@ -102,7 +102,7 @@ export class Form extends Component<IFormProps, IFormState> {
         await this.props.WorkStore?.find(this.props.workId);
         this.setState({
             ...this.state,
-            model: this.props.WorkStore?.work!.content
+            model: this.props.WorkStore!.work!.content
         })
     }
 }

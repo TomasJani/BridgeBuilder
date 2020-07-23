@@ -12,7 +12,7 @@ export function Project(props: IProjectProps) {
         <div className="project-header">
             <ul className="project-header__items">
                 <li className="project-header__item">
-                    <Link className="project-header__link" to={`/projects/${props.project.id}`}>{props.project.name}</Link>
+                    <Link className="project-header__link" to={`/projects/${props.project.id}/works`}>{props.project.name}</Link>
                 </li>
                 <li className="project-header__item">
                     <Link className="project-header__link" to="#">{props.project.owner.username}</Link>

@@ -52,7 +52,7 @@ export class AddProjectForm extends Component<IAddProjectFormProps, IAddProjectF
         const newProject: IProjectCreate = {
             name: this.state.name,
             created: (new Date()).toUTCString(),
-            owner: this.props.UserStore?.user!.id
+            owner: this.props.UserStore?.user!.id!
         }
 
         this.setState({
