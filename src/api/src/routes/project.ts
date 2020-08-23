@@ -61,7 +61,7 @@ export function projectRoutes(app: Application): void {
     });
 
     app.get("/projects/:id", ensureAuthenticated, async function (req: Request, res: Response) {
-        const results = await projectRepository.findOne(req.params.id);
+        const results = await projectRepository.findOne(req.params.id, {relations: ["invitedUsers"]});
         return res.send(results);
     });
 
@@ -96,6 +96,16 @@ export function projectRoutes(app: Application): void {
     app.get("/projects/:id/invitedUsers", ensureAuthenticated, async function (req: Request, res: Response) {
         const results = await projectRepository.findOne(req.params.id, {relations: ["invitedUsers"]});
         return res.send(results.invitedUsers);
+    });
+
+    app.post("/projects/:id/invitedUsers/kick/:userId", ensureAuthenticated, async function (req: Request, res: Response) {
+        const results = await projectRepository
+            .createQueryBuilder()
+            .relation(Project, "invitedUsers")
+            .of(req.params.id)
+            .remove(req.params.userId);
+
+        return res.send(results);
     });
 
     app.post("/projects/:id/invitedUsers/:userId", ensureAuthenticated, async function (req: Request, res: Response) {

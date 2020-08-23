@@ -1,0 +1,34 @@
+.add-collaborator-menu {
+    font-size: 1.1rem;
+    background-color: var(--main-color);
+    padding-bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 0;
+    height: 3.5rem;
+    align-items: center;
+}
+.add-collaborator-menu__items {
+    list-style-type: none;
+    display: flex;
+    margin-right: 2rem;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+.add-collaborator-menu__item {
+    text-decoration: none;
+    text-align: center;
+    margin: 1rem auto;
+}
+
+.add-collaborator-menu__settings {
+    color: var(--main-font-color);
+    display: flex;
+    font-size: 1.6rem;
+    margin-right: 2rem;
+}
+
+.add-collaborator-menu__link {
+    color: var(--main-font-color);
+    margin-left: 4rem;
+}

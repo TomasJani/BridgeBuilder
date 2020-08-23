@@ -8,6 +8,7 @@ import {MainMenu} from "./MainMenu";
 import {BrowserRouter as Router, Route, Switch,} from "react-router-dom";
 import {Projects} from "./Projects/Projects";
 import {Work} from "./Work/Work";
+import {Collaborators} from "./Collaborators/Collaborators";
 
 
 const stores = createStores()
@@ -23,6 +24,7 @@ function App() {
                     <Route exact path="/projects" component={Projects}/>
                     <Route path="/projects/:id" component={Project}/>
                     <Route path="/:projectId/works/:id" component={Work}/>
+                    <Route path="/collaborators/:id" component={Collaborators}/>
                 </Switch>
 
                 <Footer/>

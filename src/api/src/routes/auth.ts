@@ -6,7 +6,9 @@ export function authRoutes(app: Application): void {
     const clientBaseUrl = process.env.CLIENT_BASE_URL;
 
     app.get('/auth/google',
-        passport.authenticate('google', {scope: ['profile']}));
+        passport.authenticate('google', {
+            scope: ["https://www.googleapis.com/auth/plus.login"]
+        },));
 
     app.get('/auth/google/callback',
         passport.authenticate('google', {

@@ -8,7 +8,7 @@ export function userRoutes(app: Application): void {
     const usersRepository = getConnection().getRepository(User);
 
     app.get("/users", ensureAuthenticated, async function (req: Request, res: Response) {
-        const users = await usersRepository.find();
+        const users = await usersRepository.find({relations: ["ownProjects","invitedToProjects"]});
         res.json(users);
     });
 
@@ -28,7 +28,7 @@ export function userRoutes(app: Application): void {
     });
 
     app.get("/users/:id/relatedProjects", ensureAuthenticated, async function (req: Request, res: Response) {
-        const author = await usersRepository.findOne(req.params.id);
+        const author = await usersRepository.findOne(req.params.id,{relations: ["ownProjects", "invitedToProjects"]});
         const resultsOwn = await usersRepository.findOne(req.params.id, {relations: ["ownProjects", "invitedToProjects"]});
         const projects = resultsOwn.ownProjects.concat(resultsOwn.invitedToProjects);
         projects.forEach(project => project.owner = author)
