@@ -1,16 +1,16 @@
 ///<reference path= "../../../node_modules/react-froala-wysiwyg/lib/index.d.ts" />
 
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import '../../styles/work-edit/work-form.css'
-import { WorkStore } from '../../stores/WorkStore';
-import { inject, observer } from 'mobx-react';
-import { Stores } from '../../stores/Stores';
-import { IWorkEditContent } from '../../interfaces/entities/Work';
-import { IChangeCreate } from '../../interfaces/entities/Change';
+import {WorkStore} from '../../stores/WorkStore';
+import {inject, observer} from 'mobx-react';
+import {Stores} from '../../stores/Stores';
+import {IWorkEditContent} from '../../interfaces/entities/Work';
+import {IChangeCreate} from '../../interfaces/entities/Change';
 import 'froala-editor/css/froala_style.min.css';
 import 'froala-editor/css/froala_editor.pkgd.min.css';
 import FroalaEditor from 'react-froala-wysiwyg';
-import { ChangeStore } from '../../stores/ChangeStore';
+import {ChangeStore} from '../../stores/ChangeStore';
 
 interface IFormProps {
     workId: number;
@@ -49,7 +49,8 @@ export class Form extends Component<IFormProps, IFormState> {
                     />
                 </div>
                 <form onSubmit={this.handleSubmit} className="work-form">
-                    <input className="work-form__input" onChange={this.handleChange} placeholder="Change message" type="text" name="" id="" />
+                    <input className="work-form__input" onChange={this.handleChange} placeholder="Change message"
+                           type="text" name="" id=""/>
                     <button className="work-form__link" type="submit">Change</button>
                 </form>
             </div>
@@ -100,9 +101,11 @@ export class Form extends Component<IFormProps, IFormState> {
 
     async componentDidMount() {
         await this.props.WorkStore?.find(this.props.workId);
-        this.setState({
-            ...this.state,
-            model: this.props.WorkStore!.work!.content
-        })
+        if (this.props.WorkStore?.work) {
+            this.setState({
+                ...this.state,
+                model: this.props.WorkStore!.work!.content
+            })
+        }
     }
 }
