@@ -16,17 +16,9 @@ export function authRoutes(app: Application): void {
             successRedirect: `${clientBaseUrl}/projects`
         }));
 
-    app.get("/auth/getUser", (req: Request, res: Response) => {
-        console.log("user - " + req.user);
-        if (req.user === undefined) {
-            // res.send({});
-            return res.status(204).send();
-        } else {
-            return res.send(
-                req.user
-            );
-        }
-    });
+    app.get("/auth/getUser", (req: Request, res: Response) =>
+        (req.user === undefined) ? res.status(403).send() : res.send(req.user)
+    );
 
     app.get("/logout", ensureAuthenticated, (req: Request, res: Response) => {
         req.logout();

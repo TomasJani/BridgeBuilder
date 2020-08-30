@@ -29,7 +29,7 @@ export class UserStore {
         this.isLoading = true;
         const url = `${SERVER_BASE_URL}/auth/getUser`;
         const response = await fetch(url, {credentials: "include"});
-        this.user = await response.json();
+        this.user = response.status === 403 ? undefined : await response.json();
         this.isLoading = false;
     }
 
