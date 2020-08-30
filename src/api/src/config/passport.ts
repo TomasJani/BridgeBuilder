@@ -82,11 +82,9 @@ export async function setupPassport(app: Application, connection: Connection): P
 }
 
 export function ensureAuthenticated(req: Request, res: Response, next: NextFunction): void {
-    console.log("ensureAuthenticated" + req.user);
     if (req.isAuthenticated()) {
         return next();
     }
-
     //res.redirect('/login');
     res.status(401).json();
 }

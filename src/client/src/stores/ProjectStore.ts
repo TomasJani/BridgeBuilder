@@ -1,10 +1,13 @@
-import {action, observable} from "mobx";
+import {action, computed, observable} from "mobx";
 import {IProject, IProjectCreate} from "../interfaces/entities/Project";
 import {SERVER_BASE_URL} from "../constants";
 
 export class ProjectStore {
     @observable
     projects: Array<IProject>;
+
+    @observable
+    project?: IProject;
 
     @observable
     isLoading: boolean;
@@ -59,5 +62,25 @@ export class ProjectStore {
         const projectsResponse = await fetch(url, {credentials: 'include'});
         this.projects = await projectsResponse.json();
         this.isLoading = false;
+    }
+
+    @action
+    find = async (projectId: number) => {
+        const url = `${SERVER_BASE_URL}/projects/${projectId}`;
+        const projectsResponse = await fetch(url, {credentials: "include"});
+        this.project = await projectsResponse.json();
+        this.isLoading = true;
+    }
+
+    inviteUser = async (projectId: number, userId: number) => {
+        const url = `${SERVER_BASE_URL}/projects/${projectId}/invitedUsers/${userId}`;
+        await fetch(url, {credentials: "include", method: "POST"});
+        await this.loadProjects(userId)
+        await this.find(projectId)
+    }
+
+    kickCollaborator = async (projectId: number, userId: number) => {
+        const url = `${SERVER_BASE_URL}/projects/${projectId}/invitedUsers/kick/${userId}`;
+        await fetch(url, {credentials: "include", method: "POST"});
     }
 }

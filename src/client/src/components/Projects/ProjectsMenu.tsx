@@ -16,7 +16,10 @@ export function ProjectsMenu() {
                     <span className="projects-menu__link">Project</span>
                 </li>
                 <li className="projects-menu__item">
-                    <span className="projects-menu__link">User</span>
+                    <span className="projects-menu__link">Owner</span>
+                </li>
+                <li className="projects-menu__item">
+                    <span className="projects-menu__link">Collaborators</span>
                 </li>
             </ul>
             <Link to="#" className="projects-menu__item projects-menu__settings">
