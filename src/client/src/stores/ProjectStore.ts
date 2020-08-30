@@ -60,7 +60,8 @@ export class ProjectStore {
     loadProjects = async (userId: number) => {
         const url = `${SERVER_BASE_URL}/users/${userId}/relatedProjects`;
         const projectsResponse = await fetch(url, {credentials: 'include'});
-        this.projects = await projectsResponse.json();
+        console.log(projectsResponse)
+        this.projects = projectsResponse.status === 401 ? undefined : await projectsResponse.json();
         this.isLoading = false;
     }
 

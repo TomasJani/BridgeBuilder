@@ -22,7 +22,7 @@ export class WorkStore {
     find = async (workId: number) => {
         const url = `${SERVER_BASE_URL}/works/${workId}`;
         const worksResponse = await fetch(url, {credentials: "include"});
-        this.work = await worksResponse.json();
+        this.work = worksResponse.status === 401 ? undefined : await worksResponse.json()
         this.isLoading = true;
     }
 
@@ -70,7 +70,7 @@ export class WorkStore {
     loadWorks = async (projectId: number) => {
         const url = `${SERVER_BASE_URL}/projects/${projectId}/works`
         const worksResponse = await fetch(url, {credentials: "include"});
-        this.works = await worksResponse.json();
+        this.works = worksResponse.status === 401 ? undefined : await worksResponse.json()
         this.isLoading = false;
     }
 }

@@ -25,6 +25,7 @@ function App() {
                     <Route path="/projects/:id" component={Project}/>
                     <Route path="/:projectId/works/:id" component={Work}/>
                     <Route path="/collaborators/:id" component={Collaborators}/>
+                    <Route path="*" component={Login}/>
                 </Switch>
 
                 <Footer/>
