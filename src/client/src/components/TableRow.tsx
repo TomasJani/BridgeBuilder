@@ -2,34 +2,22 @@ import React, {ReactNode} from 'react';
 import {Link} from "react-router-dom";
 import "../styles/TableRow.css"
 
-interface ITableProps {
-    items: ReactNode[]
-    date?: string
-}
-
-interface IBodyRowProps {
-    content: ReactNode
-}
-
-interface IRouterLinkProps {
+export const RouterLink = (props: {
     content: ReactNode
     to: string
-}
+}) => <Link className={"table-row__link"} to={props.to} children={props.content}/>
 
-interface IRegularLinkProps {
+export const RegularLink = (props: {
     content: ReactNode
     onClick: any
-}
+}) => <a onClick={props.onClick} className={"table-row__link"}>{props.content}</a>
 
-export const RouterLink = (props: IRouterLinkProps) =>
-    <Link className={"table-row__link"} to={props.to} children={props.content}/>
+const BodyRow = (props: { content: ReactNode }) => <li className="table-row__item">{props.content}</li>
 
-export const RegularLink = (props: IRegularLinkProps) =>
-    <a onClick={props.onClick} className={"table-row__link"}>{props.content}</a>
-
-const BodyRow = (props: IBodyRowProps) => <li className="table-row__item">{props.content}</li>
-
-export const TableRow = (props: ITableProps) => {
+export const TableRow = (props: {
+    items: ReactNode[]
+    date?: string
+}) => {
     return (
         <>
             <div className="table-row">
