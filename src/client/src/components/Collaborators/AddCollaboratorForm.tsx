@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import '../../styles/collaborators/collaborator-form.css'
 import {AddCollaboratorMenu} from "./AddCollaboratorsMenu";
 import {AddCollaboratorList} from "./AddCollaboratorList";
+import {TableMenu} from "../TableMenu";
 
 interface IAddCollaboratorFormProps {
     projectId: number
@@ -22,7 +23,7 @@ export class AddCollaboratorForm extends Component<IAddCollaboratorFormProps, IA
     render() {
         return (
             <>
-                <AddCollaboratorMenu/>
+                <TableMenu headings={["Collaborators", "Invite"]}/>
                 <AddCollaboratorList projectId={this.props.projectId} username={this.state.username}/>
                 <form className="collaborator-form">
                     <input className="collaborator-form__input" value={this.state.username} onChange={this.handleChange}
