@@ -7,6 +7,9 @@ export class ChangeStore {
     changes: Array<IChange>;
 
     @observable
+    change?: IChange;
+
+    @observable
     isLoading: boolean;
 
     constructor(fixtures: IChange[]) {
@@ -26,11 +29,12 @@ export class ChangeStore {
         });
         const newChange: IChange = await response.json();
         this.changes.push(newChange);
+        await this.loadChanges(change.work)
     }
 
     @action
     editChange = async (change: IChangeEdit) => {
-        await fetch(`${SERVER_BASE_URL}/changes/${change.id}`, {
+       await fetch(`${SERVER_BASE_URL}/changes/${change.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -38,8 +42,8 @@ export class ChangeStore {
             body: JSON.stringify(change),
             credentials: "include"
         });
-        const editChangeIndex = this.changes.findIndex(storeWork => storeWork.id === change.id);
-        this.changes[editChangeIndex].name = change.name;
+        await this.loadChanges(change.workId)
+        await this.find(change.id)
     }
 
     @action
@@ -53,8 +57,8 @@ export class ChangeStore {
     }
 
     @action
-    loadWorkChanges = async (workId: number) => {
-        const changesResponse = await fetch(`${SERVER_BASE_URL}/works/${workId}/changes`,{
+    loadChanges = async (workId: number) => {
+        const changesResponse = await fetch(`${SERVER_BASE_URL}/works/${workId}/changes`, {
             credentials: "include"
         });
         this.changes = await changesResponse.json();
@@ -62,11 +66,10 @@ export class ChangeStore {
     }
 
     @action
-    loadProjectChanges = async (changeId: number) => {
-        const changesResponse = await fetch(`${SERVER_BASE_URL}/projects/${changeId}/changes`, {
-            credentials: "include"
-        });
-        this.changes = await changesResponse.json();
-        this.isLoading = false;
+    find = async (changeId: number) => {
+        const url = `${SERVER_BASE_URL}/changes/${changeId}`;
+        const changesResponse = await fetch(url, {credentials: "include"});
+        this.change = await changesResponse.json()
+        this.isLoading = true;
     }
 }

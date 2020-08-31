@@ -13,7 +13,7 @@ export function changeRoutes(app: Application): void {
     });
 
     app.get("/changes/:id", ensureAuthenticated, async function (req: Request, res: Response) {
-        const results = await changesRepository.findOne(req.params.id);
+        const results = await changesRepository.findOne(req.params.id, {relations: ["author", "work", "work.project"]});
         return res.send(results);
     });
 
@@ -34,7 +34,8 @@ export function changeRoutes(app: Application): void {
     });
 
     app.put("/changes/:id", ensureAuthenticated, async function (req: Request, res: Response) {
-        const Work = await changesRepository.findOne(req.params.id);
+        const Work = await changesRepository.findOne(req.params.id, {relations: ["work", "author"]});
+        console.log(req.body)
         changesRepository.merge(Work, req.body);
         const results = await changesRepository.save(Work);
         return res.send(results);

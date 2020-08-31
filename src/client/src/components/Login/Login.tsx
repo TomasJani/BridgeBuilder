@@ -6,14 +6,17 @@ import {UserStore} from "../../stores/UserStore";
 import {useHistory} from "react-router-dom"
 import {inject, observer} from "mobx-react";
 import {Stores} from "../../stores/Stores";
-import {useAuthRedirect} from "../useAuthRedirect";
+import {useAuthRedirect} from "../../hooks/useAuthRedirect";
+import {useRewriteUrl} from "../../hooks/useRewriteUrl";
 
 interface ILoginProps {
     UserStore?: UserStore
 }
 
 export const Login = inject(Stores.USER_STORE)(observer((props: ILoginProps) => {
-    useAuthRedirect(useHistory(), true, AUTHENTICATED_HOME_ROUTE, props.UserStore)
+    let history = useHistory()
+    useAuthRedirect(history, true, AUTHENTICATED_HOME_ROUTE, props.UserStore)
+    useRewriteUrl(history, "/login")
 
     const login = () => {
         window.location.href = `${SERVER_BASE_URL}${LOGIN_ROUTE}`;
