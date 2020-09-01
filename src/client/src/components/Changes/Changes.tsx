@@ -29,3 +29,5 @@ export const Changes = inject(Stores.CHANGE_STORE)(observer((props: IChangesProp
         </div>
     )
 }))
+
+export default Changes;

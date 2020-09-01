@@ -28,3 +28,5 @@ export const Projects = inject(Stores.USER_STORE)(observer((props: IProjectsProp
         </div>
     )
 }));
+
+export default Projects
