@@ -9,6 +9,8 @@ import {BrowserRouter as Router, Route, Switch,} from "react-router-dom";
 import {Projects} from "./Projects/Projects";
 import {Work} from "./Work/Work";
 import {Collaborators} from "./Collaborators/Collaborators";
+import {Changes} from "./Changes/Changes";
+import {ChangeDetail} from "./Changes/ChangeDetail";
 
 
 const stores = createStores()
@@ -22,9 +24,11 @@ function App() {
                 <Switch>
                     <Route exact path="/" component={Login}/>
                     <Route exact path="/projects" component={Projects}/>
+                    <Route path="/changes/:id" component={ChangeDetail}/>
                     <Route path="/projects/:id" component={Project}/>
-                    <Route path="/:projectId/works/:id" component={Work}/>
                     <Route path="/collaborators/:id" component={Collaborators}/>
+                    <Route path="/:projectId/works/:workId/changes" component={Changes}/>
+                    <Route path="/:projectId/works/:id" component={Work}/>
                     <Route path="*" component={Login}/>
                 </Switch>
 

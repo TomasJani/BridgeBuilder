@@ -1,39 +1,31 @@
-import React, {Component} from 'react';
+import React, {useEffect} from 'react';
 import {inject, observer} from 'mobx-react';
 import {Stores} from '../../stores/Stores';
 import {ChangeStore} from '../../stores/ChangeStore';
 import {Change} from './Change';
+import {useParams} from "react-router-dom";
+import {ChangesMenu} from "./ChangesMenu"
+import {AddChangeForm} from "./AddChangeForm"
 
 interface IChangesProps {
-    projectId?: number;
-    workId?: number;
     ChangeStore?: ChangeStore;
 }
 
-@inject(Stores.CHANGE_STORE)
-@observer
-export class Changes extends Component<IChangesProps> {
-    render() {
-        return (
-            <div>
-                <hr/>
-                {this.processChanges()}
-            </div>
-        )
-    }
+export const Changes = inject(Stores.CHANGE_STORE)(observer((props: IChangesProps) => {
+    const {workId} = useParams();
 
-    async componentDidMount() {
-        if (this.props.projectId !== undefined) {
-            await this.props.ChangeStore?.loadProjectChanges(this.props.projectId);
+    useEffect(() => {
+        const load = async () => {
+            if (workId !== undefined) await props.ChangeStore?.loadChanges(workId);
         }
-        if (this.props.workId !== undefined) {
-            await this.props.ChangeStore?.loadWorkChanges(this.props.workId);
-        }
-    }
+        load().then()
+    }, [props.ChangeStore, workId])
 
-    processChanges() {
-        return this.props.ChangeStore?.changes.map(change => {
-            return <Change change={change} />
-        })
-    }
-}
+    return (
+        <div className={"container"}>
+            <ChangesMenu/>
+            {props.ChangeStore?.changes.map(change => <Change key={change.id} change={change}/>)}
+            <AddChangeForm workId={workId}/>
+        </div>
+    )
+}))

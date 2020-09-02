@@ -1,5 +1,5 @@
-import { IUser } from "./User";
-import { IWork } from "./Work";
+import {IUser} from "./User";
+import {IWork} from "./Work";
 
 export interface IChange {
     id: number;
@@ -20,5 +20,7 @@ export interface IChangeCreate {
 
 export interface IChangeEdit {
     id: number;
-    name: string;
+    name: string
+    content: string
+    workId: number
 }

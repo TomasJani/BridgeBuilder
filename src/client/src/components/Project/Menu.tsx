@@ -4,9 +4,6 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEllipsisV} from '@fortawesome/free-solid-svg-icons';
 import {Link, useRouteMatch} from "react-router-dom";
 
-interface IProjectMenuProps {
-    projectId: number;
-}
 
 export function ProjectMenu() {
     let {url} = useRouteMatch();
@@ -17,6 +14,10 @@ export function ProjectMenu() {
                 <li className="project-menu__item">
                     <Link className="project-menu__link" to={`${url}/works`}>Work</Link>
                 </li>
+                <li className="project-menu__item">
+                    <Link className="project-menu__link" to={`${url}/changes`}>Author</Link>
+                </li>
+
                 <li className="project-menu__item">
                     <Link className="project-menu__link" to={`${url}/changes`}>Changes</Link>
                 </li>

@@ -2,13 +2,15 @@ import React from 'react';
 import '../../styles/work-edit/work-header.css'
 import {Link, useParams} from "react-router-dom";
 import {IWork} from "../../interfaces/entities/Work";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEdit} from "@fortawesome/free-solid-svg-icons";
 
 interface IWorkProps {
     work: IWork
 }
 
 function WorkItem(props: IWorkProps) {
-    const { id } = useParams();
+    const {id} = useParams();
     return (
         <div className="work-header">
             <ul className="work-header__items">
@@ -17,6 +19,11 @@ function WorkItem(props: IWorkProps) {
                 </li>
                 <li className="work-header__item">
                     <Link className="work-header__link" to="#">{props.work.author.username}</Link>
+                </li>
+                <li className="work-header__item">
+                    <Link className="work-header__link" to={`/${id}/works/${props.work.id}/changes`}>
+                        <FontAwesomeIcon icon={faEdit}/>
+                    </Link>
                 </li>
             </ul>
             <span className="work-header__link work-header__date">{props.work.created}</span>
