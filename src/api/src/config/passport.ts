@@ -88,3 +88,7 @@ export function ensureAuthenticated(req: Request, res: Response, next: NextFunct
     //res.redirect('/login');
     res.status(401).json();
 }
+
+export function passUnauthenticated(req: Request, res: Response, next: NextFunction): void {
+    return next();
+}

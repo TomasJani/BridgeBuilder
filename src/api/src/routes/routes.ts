@@ -5,14 +5,11 @@ import {userRoutes} from "./user";
 import {projectRoutes} from "./project";
 import {authRoutes} from "./auth";
 
-export function routes(app: Application, port: string): void {
-    authRoutes(app);
-    workRoutes(app);
-    changeRoutes(app);
-    userRoutes(app);
-    projectRoutes(app);
-
-    app.listen(port, function () {
-        console.log(`App is listening on port ${port}`);
-    });
+export function routes(app: Application, testingMode): void {
+    if (!testingMode)
+        authRoutes(app)
+    workRoutes(app, testingMode);
+    changeRoutes(app, testingMode);
+    userRoutes(app, testingMode);
+    projectRoutes(app, testingMode);
 }

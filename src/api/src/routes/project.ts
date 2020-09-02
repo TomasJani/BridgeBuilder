@@ -3,10 +3,10 @@ import {getConnection} from "typeorm";
 import {Project} from "../entity/Project";
 import {Work} from "../entity/Work";
 import {Change} from "../entity/Change";
-import {ensureAuthenticated} from "../config/passport";
+import {ensureAuthenticated, passUnauthenticated} from "../config/passport";
+import {ReasonPhrases, StatusCodes} from "http-status-codes";
 
-
-export function projectRoutes(app: Application): void {
+export function projectRoutes(app: Application, testingMode): void {
     const projectRepository = getConnection().getRepository(Project);
 
     async function addAuthorToWork(work: Work): Promise<Work> {
@@ -55,26 +55,27 @@ export function projectRoutes(app: Application): void {
         return work;
     }
 
-    app.get("/projects", ensureAuthenticated, async function (req: Request, res: Response) {
+    app.get("/projects", testingMode ? passUnauthenticated : ensureAuthenticated, async function (req: Request, res: Response) {
         const projects = await projectRepository.find();
         res.json(projects);
     });
 
-    app.get("/projects/:id", ensureAuthenticated, async function (req: Request, res: Response) {
+    app.get("/projects/:id", testingMode ? passUnauthenticated : ensureAuthenticated, async function (req: Request, res: Response) {
         const results = await projectRepository.findOne(req.params.id, {relations: ["invitedUsers"]});
-        return res.send(results);
+        results === undefined ? res.status(StatusCodes.NOT_FOUND).send({error: ReasonPhrases.NOT_FOUND}) : res.send(results)
     });
 
-    app.get("/projects/:id/works", ensureAuthenticated, async function (req: Request, res: Response) {
+    app.get("/projects/:id/works", testingMode ? passUnauthenticated : ensureAuthenticated, async function (req: Request, res: Response) {
         const results = await projectRepository.findOne(req.params.id, {relations: ["works"]});
-
+        if (results === undefined)
+            return res.status(StatusCodes.NOT_FOUND).send({error: ReasonPhrases.NOT_FOUND})
         results.works = await Promise.all(results.works.map(async (work) => addAuthorToWork(work)))
         results.works = await Promise.all(results.works.map(async (work) => addLatestChange(work)))
 
         return res.send(results.works);
     });
 
-    app.get("/projects/:id/changes", ensureAuthenticated, async function (req: Request, res: Response) {
+    app.get("/projects/:id/changes", testingMode ? passUnauthenticated : ensureAuthenticated, async function (req: Request, res: Response) {
         const results = await projectRepository.findOne(req.params.id, {relations: ["works"]});
 
         results.works = await Promise.all(results.works.map(async (work) => addChanges(work)))
@@ -88,17 +89,17 @@ export function projectRoutes(app: Application): void {
         return res.send(changes);
     });
 
-    app.get("/projects/:id/owner", ensureAuthenticated, async function (req: Request, res: Response) {
+    app.get("/projects/:id/owner", testingMode ? passUnauthenticated : ensureAuthenticated, async function (req: Request, res: Response) {
         const results = await projectRepository.findOne(req.params.id, {relations: ["owner"]});
         return res.send(results.owner);
     });
 
-    app.get("/projects/:id/invitedUsers", ensureAuthenticated, async function (req: Request, res: Response) {
+    app.get("/projects/:id/invitedUsers", testingMode ? passUnauthenticated : ensureAuthenticated, async function (req: Request, res: Response) {
         const results = await projectRepository.findOne(req.params.id, {relations: ["invitedUsers"]});
         return res.send(results.invitedUsers);
     });
 
-    app.post("/projects/:id/invitedUsers/kick/:userId", ensureAuthenticated, async function (req: Request, res: Response) {
+    app.post("/projects/:id/invitedUsers/kick/:userId", testingMode ? passUnauthenticated : ensureAuthenticated, async function (req: Request, res: Response) {
         const results = await projectRepository
             .createQueryBuilder()
             .relation(Project, "invitedUsers")
@@ -108,7 +109,7 @@ export function projectRoutes(app: Application): void {
         return res.send(results);
     });
 
-    app.post("/projects/:id/invitedUsers/:userId", ensureAuthenticated, async function (req: Request, res: Response) {
+    app.post("/projects/:id/invitedUsers/:userId", testingMode ? passUnauthenticated : ensureAuthenticated, async function (req: Request, res: Response) {
         const results = await projectRepository
             .createQueryBuilder()
             .relation(Project, "invitedUsers")
@@ -118,20 +119,20 @@ export function projectRoutes(app: Application): void {
         return res.send(results);
     });
 
-    app.post("/projects", ensureAuthenticated, async function (req: Request, res: Response) {
+    app.post("/projects", testingMode ? passUnauthenticated : ensureAuthenticated, async function (req: Request, res: Response) {
         const Project = await projectRepository.create(req.body);
         const results = await projectRepository.save(Project);
         return res.send(results);
     });
 
-    app.put("/projects/:id", ensureAuthenticated, async function (req: Request, res: Response) {
+    app.put("/projects/:id", testingMode ? passUnauthenticated : ensureAuthenticated, async function (req: Request, res: Response) {
         const Project = await projectRepository.findOne(req.params.id);
         projectRepository.merge(Project, req.body);
         const results = await projectRepository.save(Project);
         return res.send(results);
     });
 
-    app.delete("/projects/:id", ensureAuthenticated, async function (req: Request, res: Response) {
+    app.delete("/projects/:id", testingMode ? passUnauthenticated : ensureAuthenticated, async function (req: Request, res: Response) {
         await projectRepository.delete(req.params.id);
         return res.status(204).send();
     });
