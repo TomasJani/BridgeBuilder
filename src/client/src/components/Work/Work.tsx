@@ -30,3 +30,5 @@ export const Work = inject(Stores.USER_STORE)(observer((props: IWorkProps) => {
         </div>
     )
 }));
+
+export default Work

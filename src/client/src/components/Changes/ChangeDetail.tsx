@@ -29,3 +29,5 @@ export const ChangeDetail = inject(Stores.CHANGE_STORE)(observer((props: IChange
         </div>
     )
 }))
+
+export default ChangeDetail;

@@ -35,3 +35,4 @@ export const Login = inject(Stores.USER_STORE)(observer((props: ILoginProps) => 
     )
 }))
 
+export default Login
