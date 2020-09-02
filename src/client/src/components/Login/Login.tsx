@@ -23,12 +23,13 @@ export const Login = inject(Stores.USER_STORE)(observer((props: ILoginProps) => 
     }
 
     return (
-        <div>
-            <div className="google-btn" onClick={login}>
+        <div className={"login__container"}>
+            <h2 style={{color: "black", textAlign: "center",marginLeft:"8px"}}>Connect.Build.Thrive.</h2>
+            <div className="login__google-btn" onClick={login}>
                 <div className="google-icon-wrapper">
-                    <GoogleIcon className="google-icon-svg"/>
+                    <GoogleIcon className="login__google-icon__svg"/>
                 </div>
-                <p className="btn-text"><b>Sign in with Google</b></p>
+                <p className="login__google-btn__text"><b>Sign in with Google</b></p>
             </div>
         </div>
     )

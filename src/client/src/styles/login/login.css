@@ -1,4 +1,4 @@
-.google-btn {
+.login__google-btn {
     margin: 25px;
     width: 80%;
     min-width: 184px;
@@ -13,17 +13,7 @@
     display: flex;
 }
 
-.google-icon-wrapper {
-    position: absolute;
-    margin-top: 1px;
-    margin-left: 1px;
-    width: 40px;
-    height: 40px;
-    border-radius: 2px;
-    user-select: none
-}
-
-.google-icon-svg {
+.login__google-icon__svg {
     position: absolute;
     margin-top: 11px;
     margin-left: 11px;
@@ -32,7 +22,7 @@
     user-select: none
 }
 
-.btn-text {
+.login__google-btn__text {
     float: right;
     margin: 11px 14px 40px 40px;
     color: #757575;
@@ -41,14 +31,31 @@
     user-select: none
 }
 
-.google-btn:hover {
+.login__google-btn:hover {
     box-shadow: 0 3px 8px rgba(117, 117, 117, .5);
     user-select: none
 }
 
-.google-btn:active {
+.login__google-btn:active {
     box-shadow: 0 1px 1px #757575;
     background: #F8F8F8;
     color: #fff;
     user-select: none
+}
+
+.login__container {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 6.25rem;
+    margin: auto;
+    width: 6.25rem;
+    height: 6.25rem;
+}
+
+.login__text {
+    color: var(--secondary-font-color);
+    text-align: center;
+    margin-left: .5rem;
 }
